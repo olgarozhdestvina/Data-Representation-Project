@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset = "UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- CSS -->
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <title>Olga's Dental Clinic</title>
+    </head>
+    <body>
+        <div id="create-update" style="display:none">
+            <h3>Please enter the following details</h3>
+            <table class="table" id="createUpdateForm">
+                <tr>
+                    <td>Dentist ID</td>
+                    <td><input type="text" name="dentistId" id="idInput"></td>
+                </tr>
+                <tr>
+                    <td>Dentist Name</td>
+                    <td><input type="text" name="dentistName"></td>
+                </tr>
+                <tr>
+                    <td>Position</td>
+                    <td><input type="text" name="position"></td>
+                </tr>
+                <tr>
+                    <td>Register Number</td>
+                    <td><input type="currency" name="regNumber"></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-info" id="create-button" onclick="doCreate()">Create</button></td>
+                    <td><button class="btn btn-success" value="Go back!" id="back-button" onclick="history.back()">Back</button></td>
+                    <td><button class="btn btn-info" id="update-button" onclick="doUpdate()">Update</button></td>
+                </tr>
+            </table>
+        </div>
+        <div id="display">
+            <h2>Dentists</h2>
+            <button class="btn btn-info" onclick="showCreate()">Create</button>
+            <table id="dentistTable" class="table">
+                <tr>
+                    <th>dentistId</th><th>position</th><th>dentistName</th><th>regNumber</th><th></th><th></th>
+                </tr>
+                </tr>
+            </table>
+
+        </div>
+    </body>
+    <script>
+        function showCreate(){
+            document.getElementById('display').style.display = "none";
+            document.getElementById('create-update').style.display = "block";
+            document.getElementById('update-button').style.display = "none";
+            document.getElementById('create-button').style.display = "block";
+            document.getElementById('back-button').style.display = "block";   
+        }
+
+
+        function showUpdate(thisElem){
+            var rowElement = thisElem.parentNode.parentNode;
+            dentist = readdentistFromRow(rowElement);
+            populateForm(dentist);
+
+            document.getElementById('display').style.display = "none";
+            document.getElementById('create-update').style.display = "block";
+            document.getElementById('update-button').style.display = "block";
+            document.getElementById('create-button').style.display = "none";
+            document.getElementById('back-button').style.display = "block";
+        }
+
+        function readdentistFromRow(rowElement){
+            dentist = {}
+            dentist.dentistId = rowElement.getAttribute("id");
+            dentist.dentistName = rowElement.cells[1].firstChild.textContent
+            dentist.position = rowElement.cells[2].firstChild.textContent
+            dentist.regNumber = rowElement.cells[3].firstChild.textContent
+            return dentist
+        }
+
+
+        function populateForm(dentist){
+            var form = document.getElementById('createUpdateForm')
+
+            form.querySelector('input[name="dentistId"]').value = dentist.dentistId;
+            form.querySelector('input[name="dentistId"]').disabled = true;
+            form.querySelector('input[name="dentistName"]').value = dentist.dentistName;
+            form.querySelector('input[name="position"]').value = dentist.position;
+            form.querySelector('input[name="regNumber"]').value = dentist.regNumber;
+        }
+
+        function clearForm(){
+            var form = document.getElementById('createUpdateForm')
+
+            form.querySelector('input[name="dentistId"]').value = '';
+            form.querySelector('input[name="dentistId"]').disabled = false;
+            form.querySelector('input[name="dentistName"]').value = '';
+            form.querySelector('input[name="position"]').value = '';
+            form.querySelector('input[name="regNumber"]').value = '';
+        }
+
+        function doCreate(){
+           dentist = getdentistFromForm()
+            $.ajax({
+                url:"/dentists",
+                method:"POST",
+                data:JSON.stringify(dentist),
+                dataType:"JSON",
+                contentType:"application/json; charset=utf-8",
+                success:function(result){
+                    console.log(result)
+                    adddentisttoTable(dentist);
+                    showDisplay();
+                    clearForm();
+                },
+                error:function(xhr,status,error){
+                    console.log("error " + error + "status: " + status);
+                }
+            })}
+
+        function doUpdate(){
+            dentist = getdentistFromForm()
+            updateServer(dentist);
+        }
+
+        function updateServer(dentist){
+            $.ajax({
+                url:"/dentists/"+dentist.dentistId,
+                method:"PUT",
+                data:JSON.stringify(dentist),
+                dataType:"JSON",
+                contentType:"application/json; charset=utf-8",
+                success:function(result){
+                    console.log(result)
+                    updateTableRow(dentist);
+                    showDisplay();
+                    clearForm();
+                },
+                error:function(xhr,status,error){
+                    console.log("error " + error + "status: " + status);
+                }
+            })}
+
+        function updateTableRow(dentist){
+            rowElement = document.getElementById(dentist.dentistId);
+            rowElement.cells[1].firstChild.textContent = dentist.dentistName;
+            rowElement.cells[2].firstChild.textContent = dentist.position;
+            rowElement.cells[3].firstChild.textContent = dentist.regNumber;
+        }
+
+
+        function doDelete(thisElem){
+            var tableElement = document.getElementById('dentistTable');
+            var rowElement = thisElem.parentNode.parentNode;
+            var index = rowElement.rowIndex;
+            dentistId = rowElement.getAttribute('id');
+            $.ajax({
+                url:'/dentists/'+dentistId,
+                method:'DELETE',
+                dataType:'JSON',
+                success:function(results){
+                    tableElement.deleteRow(index);
+                    },
+                error:function(xhr,status,error){
+                    console.log("error " + error + "status: " + status)
+                }
+            })
+            
+        }
+
+        function getdentistFromForm(){
+            var dentist = {}
+            var form = document.getElementById('createUpdateForm')
+            dentist.dentistId = form.querySelector('input[name="dentistId"]').value
+            dentist.dentistName = form.querySelector('input[name="dentistName"]').value
+            dentist.position = form.querySelector('input[name="position"]').value
+            dentist.regNumber = form.querySelector('input[name="regNumber"]').value
+            return dentist;
+        }
+
+        function showDisplay(){
+            document.getElementById('display').style.display = "block"
+            document.getElementById('create-update').style.display = "none"
+        }
+
+
+        function populateTable(){
+            // ajax getALL()
+            $.ajax({
+                url:'http://127.0.0.1:5000/dentists',
+                method:'GET',
+                dataType:'JSON',
+                success:function(results){
+                    for (dentist of results){
+                        adddentisttoTable(dentist);
+                    }
+                },
+                error:function(xhr,status,error){
+                    console.log("error " + error + "status: " + status)
+                }
+            })  
+        }
+        function adddentisttoTable(dentist){
+            tableElement = document.getElementById("dentistTable")
+            rowElement = tableElement.insertRow(-1)
+            rowElement.setAttribute("id", dentist.dentistId)
+            var cell1 = rowElement.insertCell(0)
+            cell1.innerHTML = dentist.dentistId
+            var cell2 = rowElement.insertCell(1)
+            cell2.innerHTML = dentist.dentistName
+            var cell3 = rowElement.insertCell(2)
+            cell3.innerHTML = dentist.position
+            var cell4 = rowElement.insertCell(3)
+            cell4.innerHTML = dentist.regNumber
+            var cell5 = rowElement.insertCell(4)
+            cell5.innerHTML = '<button onclick="showUpdate(this)">update</button>'
+            var cell6 = rowElement.insertCell(5)
+            cell6.innerHTML = '<button onclick="doDelete(this)">delete</button>'
+        }
+        populateTable();
+    </script>
+</html>
