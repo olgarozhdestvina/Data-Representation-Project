@@ -1,19 +1,7 @@
 from DentistDAO import dentistDAO
 
-dentist1 = {
-    'dentistName': 'Victor Hugo', 
-    'position': 'general dentist',
-    'regNumber': '120/M'
-}
-
-dentist2 = {
-    'dentistName': 'Victor Hugo', 
-    'position': 'endodontist',
-    'regNumber': '120/M'
-}
-
 # Create.
-latestid = dentistDAO.create(dentist1)
+latestid = dentistDAO.create(('Victor Hugo', 'general dentist', '120/M'))
 print(f"New dentist was added to the records")
 
 # Get All.
@@ -21,13 +9,17 @@ returnValue = dentistDAO.get_all()
 print(f"All dentists {returnValue}")
 
 # Find by ID.
-returnValue = dentistDAO.find_by_dentistId()
+returnValue = dentistDAO.find_by_dentistId(latestid)
 print(f"Found by id {returnValue}")
 
 # Update.
-returnValue = dentistDAO.update(dentist2)
-print(f"Updated {returnValue}")
+returnValue = dentistDAO.update(('Victor Hugo', 'endodontist', '120/M', latestid))
+print(f"Updated {latestid}")
 
 # Delete.
-returnValue = dentistDAO.delete()
-print(f"Deleted {returnValue}")
+returnValue = dentistDAO.delete(latestid)
+print(f"Deleted {latestid}")
+
+# Get All dentist again.
+returnValue = dentistDAO.get_all()
+print(f"All dentists {returnValue}")

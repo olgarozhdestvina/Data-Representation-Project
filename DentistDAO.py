@@ -12,15 +12,9 @@ class DentistDAO:
         )
     
     # create a dentist
-    def create(self, dentist):
+    def create(self, values):
         cursor = self.db.cursor()
         sql = "INSERT INTO dentists (dentistName, position, regNumber) values (%s, %s, %s)"
-        values = [
-            dentist['dentistName'],
-            dentist['position'],
-            dentist['regNumber']
-        ]
-
         cursor.execute(sql, values)
         self.db.commit()
         return cursor.lastrowid
@@ -42,25 +36,17 @@ class DentistDAO:
     def find_by_dentistId(self, dentistId):
         cursor = self.db.cursor()
         sql = "SELECT * FROM dentists WHERE dentistId = %s"
-        values = [dentistId]
+        values = (dentistId,)
         cursor.execute(sql, values)
         result = cursor.fetchone()
         return self.convert_to_dict(result)
 
 
-    def update(self, dentist):
+    def update(self, values):
         cursor = self.db.cursor()
         sql = "UPDATE dentists SET dentistName = %s, position = %s, regNumber = %s WHERE dentistId = %s"
-        values = [
-            dentist['dentistName'],
-            dentist['position'],
-            dentist['regNumber'],
-            dentist['dentistId']
-        ]
-
         cursor.execute(sql, values)
         self.db.commit()
-        return dentist
 
     def delete(self, dentistId):
         cursor = self.db.cursor()

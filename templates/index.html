@@ -1,0 +1,355 @@
+JS<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Olga's Dental Clinic</title>
+    <style>
+        /* Define preferred and "fallback" fonts. Set margin, and height to 100% as a part of moving the footer to the bottom  */
+        body {
+            font-family: Times, Helvetica, sans-serif;
+            font-size: 16px;
+        }
+
+        /* Make box flexible, wrap items on resizing the window. */
+        #form {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        /* Set background and text colour for all buttons */
+        button {
+            background-color: #15132098;
+            color: white;
+            border: none;
+            padding: 5px;
+            margin-right: 5px;
+            margin-left: 5px;
+        }
+
+        /* Zoom in on buttons and change text colour */
+        button:hover {
+            transform: scale(1.08);
+            font-weight: bold;
+        }
+
+        /* Set the padding of the header and background. Center text and set its colour  */
+        header {
+            padding: 5px;
+            text-align: center;
+            background: #426280;
+            color: white;
+        }
+
+        #grid {
+            font-weight: bold;
+            padding: 12px;
+            background: #161f27;
+            color: white;
+
+        }
+
+        label {
+            margin: 10px;
+            font-weight: bold;
+        }
+
+        /* Set background colour and padding. Set height and top margin so to keep the footer at the bottom of the screen, but with a thin line for visual separation */
+        footer {
+            position: fixed; 
+            padding: 10px 10px 0px 10px; 
+            bottom: 0; 
+            width: 100%; 
+            /* Height of the footer*/  
+            height: 100px; 
+            background: #ddd;
+
+        }
+
+        /* Center text, define its font size, display the links as a centrally floating block and move it from the top of the footer */
+        #footbox {
+            display: block;
+            float: center;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 13px;
+        }
+
+        .text-hover:hover {
+            color: #1abc9c;
+            font-weight: bold;
+        }
+        img {
+            float: center;
+            width: 50px;
+            margin: 5px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="https://pngimage.net/wp-content/uploads/2018/05/diente-logo-png-3.png" alt="dental_image"/>
+        <p>WELCOME TO DENTIST DATABASE</p>
+    </header>
+
+    <!-- Table-->
+    <div>
+        <table class="table" id="dentistTable">
+            <caption>List of currently employed dentists</caption>
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Dentist ID</th>
+                    <th scope="col">Dentist Name</th>
+                    <th scope="col">Position</th>
+                    <th scope="col">Register Number</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <!-- Form -->
+    <form>
+        <div class="form-group" id='createUpdateForm' style="display: none">
+            <p id="grid">
+                <span id="createLabel">Add</span> <span id="updateLabel">update</span>Dentist
+            </p>
+            <input type="hidden" name="dentistId" />
+            <label for="dentistName">Dentist Name</label>
+            <input type="text" name="dentistName" class="form-control" id="formGroupExampleInput" placeholder="e.g. John Smith"/><br />
+            <label for="position">Position</label>
+            <select class="form-control" id="formGroupExampleInput" name="position">
+                <option selected value="general dentist">General Dentist</option>
+                <option value="implantologist">Implantologist</option>
+                <option value="endodontist">Endodontist</option>
+                <option value="orthodontist">Orthodontist</option>
+                <option value="maxillofacial surgeon">Maxillofacial Surgeon</option>
+            </select><br />
+            <label for="regNumber">Register Number</label>
+            <input type="text" name="regNumber" class="form-control" id="formGroupExampleInput" placeholder="e.g. 34/M9" /><br />
+            <span><button id="doCreateButton" onclick="doCreate()">Create</button></span>
+            <span><button id="doUpdateButton" onclick="doUpdate()">Update</button></span>
+        </div>
+    </form>
+    <div>
+        <button id="showCreateButton" onclick="showCreate()">Add Dentist</button>
+       </div>
+
+    <!-- Footer -->
+    <footer>
+        <div id="footbox">
+            <p class="text-hover">OLGA's DENTAL CLINIC</p>
+            <p class="text-hover">Project assessment for Data Representation GMIT 2020</p>
+        </div>
+    </footer>
+</body>
+<script>
+    function showCreate() {
+        document.getElementById('showCreateButton').style.display = "none"
+        document.getElementById('dentistTable').style.display = "none"
+        document.getElementById('createUpdateForm').style.display = "block"
+
+        document.getElementById('createLabel').style.display = "inline"
+        document.getElementById('updateLabel').style.display = "none"
+
+        document.getElementById('doCreateButton').style.display = "block"
+        document.getElementById('doUpdateButton').style.display = "none"
+
+    }
+    function showViewAll() {
+        document.getElementById('showCreateButton').style.display = "block"
+        document.getElementById('dentistTable').style.display = "block"
+        document.getElementById('createUpdateForm').style.display = "none"
+    }
+    function showUpdate(buttonElement) {
+        document.getElementById('showCreateButton').style.display = "none"
+        document.getElementById('dentistTable').style.display = "none"
+        document.getElementById('createUpdateForm').style.display = "block"
+
+        document.getElementById('createLabel').style.display = "none"
+        document.getElementById('updateLabel').style.display = "inline"
+
+        document.getElementById('doCreateButton').style.display = "none"
+        document.getElementById('doUpdateButton').style.display = "block"
+
+
+        var rowElement = buttonElement.parentNode.parentNode
+        // these is a way of finding the closest <tr> which would safer, closest()
+
+        var dentist = getDentistFromRow(rowElement)
+        populateFormWithDentist(dentist)
+    }
+    function doCreate() {
+        var form = document.getElementById('createUpdateForm')
+
+        var dentist = {}
+
+        dentist.dentistName = form.querySelector('input[name="dentistName"]').value
+        dentist.position = form.querySelector('select[name="position"').value
+        dentist.regNumber = form.querySelector('input[name="regNumber"]').value
+        console.log(JSON.stringify(dentist))
+        createDentistAjax(dentist)
+
+
+    }
+    function doUpdate() {
+        var dentist = getDentistFromForm();
+        var rowElement = document.getElementById(dentist.dentistId);
+        updateDentistAjax(dentist);
+        setDentistInRow(rowElement, dentist);
+
+        clearForm();
+        showViewAll();
+    }
+    function doDelete(r) {
+        var tableElement = document.getElementById('dentistTable');
+        var rowElement = r.parentNode.parentNode;
+        var index = rowElement.rowIndex;
+        deleteDentistAjax(rowElement.getAttribute("dentistId"));
+        tableElement.deleteRow(index);
+    }
+
+    function addDentistToTable(dentist) {
+        var tableElement = document.getElementById('dentistTable')
+        var rowElement = tableElement.insertRow(-1)
+        rowElement.setAttribute('dentistId', dentist.dentistId)
+        var cell1 = rowElement.insertCell(0);
+        cell1.innerHTML = dentist.denyistId
+        var cell2 = rowElement.insertCell(1);
+        cell2.innerHTML = dentist.dentistName
+        var cell3 = rowElement.insertCell(2);
+        cell3.innerHTML = dentist.position
+        var cell4 = rowElement.insertCell(3);
+        cell4.innerHTML = dentist.regNumber
+        var cell5 = rowElement.insertCell(4);
+        cell5.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
+        var cell6 = rowElement.insertCell(5);
+        cell6.innerHTML = '<button onclick=doDelete(this)>Delete</button>'
+
+    }
+
+    function clearForm() {
+        var form = document.getElementById('createUpdateForm')
+
+        form.querySelector('input[name="dentistName"]').value = ''
+        form.querySelector('select[name="position"]').value = ''
+        form.querySelector('input[name="regNumber"]').value = ''
+    }
+    function getDentistFromRow(rowElement) {
+        var car = {}
+        dentist.dentistId = rowElement.getAttribute('dentistId')
+        dentist.dentistName = rowElement.cells[1].firstChild.textContent
+        dentist.position = rowElement.cells[2].firstChild.textContent
+        dentist.regNumber = rowElement.cells[3].firstChild.textContent
+        return dentist
+    }
+    function setDentistInRow(rowElement, dentist) {
+        rowElement.cells[0].firstChild.textContent = dentist.dentistId
+        rowElement.cells[1].firstChild.textContent = dentist.dentistName
+        rowElement.cells[2].firstChild.textContent = dentist.position
+        rowElement.cells[3].firstChild.textContent = dentist.regNumber
+    }
+    function populateFormWithDentist(dentist) {
+        var form = document.getElementById('createUpdateForm')
+        form.querySelector('input[name="dentistId"]').disabled = true
+
+        form.querySelector('input[name="dentistId"]').value = dentist.dentistId
+        form.querySelector('input[name="dentistName"]').value = dentist.dentistName
+        form.querySelector('select[name="position"]').value = dentist.position
+        form.querySelector('input[name="regNumber"]').value = dentist.regNumber
+        return dentist
+    }
+    function getDentistFromForm() {
+        var form = document.getElementById('createUpdateForm')
+        var dentist = {}
+        dentist.dentistId = form.querySelector('input[name="dentistId"]').value
+        dentist.dentistName = form.querySelector('input[name="dentistName"]').value
+        dentist.position = form.querySelector('select[name="position"]').value
+        dentist.regNumber = form.querySelector('input[name="regNumber"]').value
+        console.log(JSON.stringify(dentist))
+        return dentist
+    }
+    function getAllAjax() {
+        $.ajax({
+            "url": "http://127.0.0.1:5000/dentists",
+            "method": "GET",
+            "data": "",
+            "dataType": "JSON",
+            "success": function (result) {
+                //console.log(result);
+                for (dentist of result) {
+                    addDentistToTable(dentist);
+                }
+
+            },
+            "error": function (xhr, status, error) {
+                console.log("error: " + status + " msg:" + error);
+            }
+        });
+
+    }
+    function createDentistAjax(dentist) {
+        console.log(JSON.stringify(dentist));
+        $.ajax({
+            "url": "http://127.0.0.1:5000/dentists",
+            "method": "POST",
+            "data": JSON.stringify(dentist),
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success": function (result) {
+                //console.log(result);
+                dentist.dentistId = result.dentistId
+                addDentistToTable(dentist)
+                clearForm()
+                showViewAll()
+            },
+            "error": function (xhr, status, error) {
+                console.log("error: " + status + " msg:" + error);
+            }
+        });
+    }
+    function updateDentistAjax(dentist) {
+        console.log(JSON.stringify(dentist));
+        $.ajax({
+            "url": "http://127.0.0.1:5000/dentists/" + encodeURI(dentist.dentistId),
+            "method": "PUT",
+            "data": JSON.stringify(dentist),
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success": function (result) {
+                // console.log(result);
+
+            },
+            "error": function (xhr, status, error) {
+                console.log("error: " + status + " msg:" + error);
+            }
+        });
+    }
+    function deleteDentistAjax(dentistId) {
+        $.ajax({
+            "url": "http://127.0.0.1:5000/dentists/" + encodeURI(dentistId),
+            "method": "DELETE",
+            "data": "",
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success": function (result) {
+                //console.log(result);
+                alert("Dentist with ID " + dentistId + " has been deleted from the database")
+            },
+            "error": function (xhr, status, error) {
+                console.log("error: " + status + " msg:" + error);
+            }
+        });
+    }
+    getAllAjax();
+
+</script>
+
+</html>

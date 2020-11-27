@@ -1,11 +1,24 @@
-from flask import Flask, request, abort, jsonify, render_template
+from flask import Flask, request, abort, jsonify, render_template, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 from DentistDAO import dentistDAO
 
 app = Flask(__name__, static_url_path='', static_folder='templates')
+#db = SQLAlchemy(app)
+
+dentists = [
+    {"dentistId": 1, "dentistName": "Natasha Wood", "position": "general dentist", "regNumber": "34/5Y"},
+    {"dentistId": 2, "dentistName": "Ciaran Smith", "position": "orthodontist", "regNumber": "654/2"},
+    {"dentistId": 3, "dentistName": "Sonia Alapont", "position": "maxillofacial surgeon", "regNumber": "56/3Z"}
+]
 
 @app.route('/')
 def index():
     return render_template("index.html")
+
+@app.route('/admin')
+def admin():
+    return redirect(url_for("home"))
+
 
 # Get all
 @app.route('/dentists')
@@ -28,10 +41,7 @@ def create():
         "position": request.json["position"],
         "regNumber": request.json["regNumber"]
     }
-    values =(dentist['dentistName'],dentist['position'],dentist['regNumber'])
-    newId = dentistDAO.create(values)
-    dentist['dentistId'] = newId
-    return jsonify(dentist)
+    return jsonify(dentistDAO.create(dentist))
 
 
 
@@ -40,21 +50,19 @@ def create():
 
 @app.route('/dentists/<int:dentistId>', methods=['PUT'])
 def update(dentistId):
-    foundDentist = dentistDAO.find_by_dentistId(dentistId)
-    if not foundDentist:
-        abort(404)
-    if not request.json:
-        abort(400)
+    founddentist = dentistDAO.find_by_dentistId(dentistId)
+    if founddentist == {}:
+        return jsonify({}), 404
+    currentdentist = founddentist
     if 'dentistName' in request.json:
-        foundDentist['dentistName'] = request.json['dentistName']
+        currentdentist['dentistName'] = request.json['dentistName']
     if 'position' in request.json:
-        foundDentist['position'] = request.json['position']
+        currentdentist['position'] = request.json['position']
     if 'regNumber' in request.json:
-        foundDentist['regNumber'] = request.json['regNumber']
+        currentdentist['regNumber'] = request.json['regNumber']
 
-    values = (foundDentist['dentistName'],foundDentist['position'],foundDentist['regNumber'],foundDentist['dentistId'])
-    dentistDAO.update(values)
-    return jsonify(foundDentist)
+    dentistDAO.update(currentdentist)
+    return jsonify(currentdentist)
 
 
 
@@ -63,7 +71,10 @@ def update(dentistId):
 
 @app.route("/dentists/<int:dentistId>", methods=['DELETE'])
 def delete(dentistId):
-    dentistDAO.delete(dentistId)
+    foundDentist = list(filter(lambda t: t["dentistId"] == dentistId, dentists))
+    if len(foundDentist) == 0:
+        return jsonify({}), 404
+    dentists.remove(foundDentist[0])
     return jsonify({"Done":True})
 
 
