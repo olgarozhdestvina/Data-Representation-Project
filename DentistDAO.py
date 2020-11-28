@@ -14,7 +14,7 @@ class DentistDAO:
     # create a dentist
     def create(self, values):
         cursor = self.db.cursor()
-        sql = "INSERT INTO dentists (dentistName, position, regNumber) values (%s, %s, %s)"
+        sql = "INSERT INTO dentist (dentistName, position, regNumber) values (%s, %s, %s)"
         cursor.execute(sql, values)
         self.db.commit()
         return cursor.lastrowid
@@ -22,20 +22,19 @@ class DentistDAO:
     # get all dentists
     def get_all(self):
         cursor = self.db.cursor()
-        sql = "SELECT * FROM dentists"
+        sql="SELECT * FROM dentist"
         cursor.execute(sql)
         results = cursor.fetchall()
         returnArray = []
-        # print(results)
         for result in results:
-            result_as_dict = self.convert_to_dict(result)
-            returnArray.append(result_as_dict)
-        
-        return returnArray
+            returnArray.append(self.convert_to_dict(result))
 
+        return returnArray
+  
+    # get dentist by ID
     def find_by_dentistId(self, dentistId):
         cursor = self.db.cursor()
-        sql = "SELECT * FROM dentists WHERE dentistId = %s"
+        sql = "SELECT * FROM dentist WHERE dentistId = %s"
         values = (dentistId,)
         cursor.execute(sql, values)
         result = cursor.fetchone()
@@ -44,13 +43,13 @@ class DentistDAO:
 
     def update(self, values):
         cursor = self.db.cursor()
-        sql = "UPDATE dentists SET dentistName = %s, position = %s, regNumber = %s WHERE dentistId = %s"
+        sql = "UPDATE dentist SET dentistName = %s, position = %s, regNumber = %s WHERE dentistId = %s"
         cursor.execute(sql, values)
         self.db.commit()
 
     def delete(self, dentistId):
         cursor = self.db.cursor()
-        sql = "DELETE FROM dentists WHERE dentistId = %s"
+        sql = "DELETE FROM dentist WHERE dentistId = %s"
         values = (dentistId,)
         cursor.execute(sql, values)
         self.db.commit()
@@ -60,12 +59,12 @@ class DentistDAO:
     # convert tuples to dictionary objects
     def convert_to_dict(self, result):
         colnames = ['dentistId', 'dentistName','position','regNumber']
-        dentist = {}
+        item = {}
 
         if result:
             for i, colname in enumerate(colnames):
                 value = result[i]
-                dentist[colname] = value
-        return dentist
+                item[colname] = value
+        return item
 
 dentistDAO = DentistDAO()
