@@ -1,20 +1,55 @@
-from flask import Flask, request, abort, jsonify, render_template, session, url_for
+from flask import Flask, request, abort, jsonify, render_template, session, url_for, redirect, flash
+from datetime import timedelta
 from DentistDAO import dentistDAO
 
 app = Flask(__name__, static_url_path='', static_folder='templates')
 app.secret_key = 'someKey'
+# store session for 1 hour
+app.permanent_session_lifetime = timedelta(hours=1)
 
+# Main page
 @app.route('/')
 def index():
     return render_template("index.html")
 
+# Login
 @app.route("/login", methods=['GET','POST'])
 def login():
-    return render_template()
+    if request.method == "POST":
+        # set session
+        session.permanenet = True
+        # get username from the form
+        user = request.form["nm"]
+        # store it in session
+        session["user"] = user
+        flash("Successfully logged in")
+        return redirect(url_for("user"))
+    else:
+        if "user" in session:
+            flash("Already logged in")
+            return redirect(url_for("user"))
+        return render_template("login.html")
 
-@app.route("/<usr>", methods=['GET','POST'])
-def user(usr):
-    return "<h1>Hello, {usr} </h1>"
+
+@app.route("/user", methods=['GET','POST'])
+def user():
+    # check if user is in session
+    if "user" in session:
+        user = session["user"]
+        return render_template("user.html", user=user)
+    else:
+        flash("Please login to access this page")
+        return redirect(url_for("login"))
+
+# Logout
+@app.route("/logout")
+def logout():
+    session.pop("user", None)
+    # Only display the message if user is in the session
+    flash(f"You have been logged out", "info")
+    return redirect(url_for("login"))
+
+
 
 # Get all
 @app.route('/dentists')
