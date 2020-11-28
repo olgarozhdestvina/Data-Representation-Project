@@ -1,6 +1,6 @@
 from flask import Flask, request, abort, jsonify, render_template, session, url_for, redirect, flash
 from datetime import timedelta
-from DentistDAO import dentistDAO
+from DentalClinicDAO import dentalClinicDAO
 
 app = Flask(__name__, static_url_path='', static_folder='templates')
 app.secret_key = 'someKey'
@@ -31,12 +31,12 @@ def login():
         return render_template("login.html")
 
 
-@app.route("/user", methods=['GET','POST'])
-def user():
+@app.route("/databases", methods=['GET','POST'])
+def database():
     # check if user is in session
     if "user" in session:
         user = session["user"]
-        return render_template("user.html", user=user)
+        return render_template("databases.html", user=user)
     else:
         flash("Please login to access this page")
         return redirect(url_for("login"))
@@ -50,21 +50,23 @@ def logout():
     return redirect(url_for("login"))
 
 
-
-# Get all
+# DENTIST TABLE
+# Get all dentists
+# curl http://127.0.0.1:5000/dentists
 @app.route('/dentists')
-def get_all():
-    return jsonify(dentistDAO.get_all())
+def get_all_dentists():
+    return jsonify(dentalClinicDAO.get_all_dentists())
 
 # Find by dentistId
+# curl http://127.0.0.1:5000/dentists/5
 @app.route("/dentists/<int:dentistId>")
 def find_by_dentistId(dentistId):
-    return jsonify(dentistDAO.find_by_dentistId(dentistId))
+    return jsonify(dentalClinicDAO.find_by_dentistId(dentistId))
 
-# Create
+# Create dentist
 # curl -X POST -H "content-type:application/json" -d "{\"dentistName\": \"Siobhan Fahey\", \"position\": \"endodontist\", \"regNumber\":\"123/2T\"}" http://127.0.0.1:5000/dentists
 @app.route('/dentists', methods=['POST'])
-def create():
+def create_dentist():
     if not request.json:
         abort(400)
     dentist = {
@@ -73,18 +75,16 @@ def create():
         "regNumber": request.json["regNumber"]
     }
     values =(dentist['dentistName'],dentist['position'],dentist['regNumber'])
-    newId = dentistDAO.create(values)
+    newId = dentalClinicDAO.create_dentist(values)
     dentist['dentistId'] = newId
     return jsonify(dentist)
 
 
-
-# Update
+# Update dentist
 # curl -X PUT -H "content-type:application/json" -d "{\"dentistName\": \"Siobhan Fahey\", \"position\": \"endodontist, implantologist\", \"regNumber\":\"123/2T\"}" http://127.0.0.1:5000/dentists/1
-
 @app.route('/dentists/<int:dentistId>', methods=['PUT'])
-def update(dentistId):
-    foundDentist = dentistDAO.find_by_dentistId(dentistId)
+def update_dentist(dentistId):
+    foundDentist = dentalClinicDAO.find_by_dentistId(dentistId)
     if not foundDentist:
         abort(404)
     if not request.json:
@@ -97,18 +97,76 @@ def update(dentistId):
         foundDentist['regNumber'] = request.json['regNumber']
 
     values = (foundDentist['dentistName'],foundDentist['position'],foundDentist['regNumber'],foundDentist['dentistId'])
-    dentistDAO.update(values)
+    dentalClinicDAO.update_dentist(values)
     return jsonify(foundDentist)
 
 
-
-# Delete
+# Delete dentist
 # curl -X DELETE http://127.0.0.1:5000/dentists/1
-
 @app.route("/dentists/<int:dentistId>", methods=['DELETE'])
-def delete(dentistId):
-    dentistDAO.delete(dentistId)
+def delete_dentist(dentistId):
+    dentalClinicDAO.delete_dentist(dentistId)
     return jsonify({"Done":True})
+
+
+
+# PATIENT TABLE
+# Get all patient
+# curl http://127.0.0.1:5000/patients
+@app.route('/patients')
+def get_all_patients():
+    return jsonify(dentalClinicDAO.get_all_patients())
+
+# Find by patientId
+# curl http://127.0.0.1:5000/patients/5
+@app.route("/patients/<int:patientId>")
+def find_by_patientId(patientId):
+    return jsonify(dentalClinicDAO.find_by_patientId(patientId))
+
+# Create patient
+# curl -X POST -H "content-type:application/json" -d "{\"patientName\": \"Siobhan Fahey\", \"phone\": \"0895546575\"}" http://127.0.0.1:5000/patients
+@app.route('/patients', methods=['POST'])
+def create_patient():
+    if not request.json:
+        abort(400)
+    patient = {
+        "patientName": request.json["patientName"],
+        "phone": request.json["phone"]
+    }
+    values =(patient['patientName'],patient['phone'])
+    newId = dentalClinicDAO.create_patient(values)
+    patient['patientId'] = newId
+    return jsonify(patient)
+
+
+# Update patient
+# curl -X PUT -H "content-type:application/json" -d "{\"patientName\": \"Siobhan Fahey\", \"phone\": \"0875467686\"}" http://127.0.0.1:5000/patients/1
+@app.route('/patients/<int:patientId>', methods=['PUT'])
+def update_patient(patientId):
+    foundPatient = dentalClinicDAO.find_by_patientId(patientId)
+    if not foundPatient:
+        abort(404)
+    if not request.json:
+        abort(400)
+    if 'phone' in request.json and type(request.json['phone']) is not int:
+        abort(400)
+    if 'patientName' in request.json:
+        foundPatient['patientName'] = request.json['patientName']
+    if 'phone' in request.json:
+        foundPatient['phone'] = request.json['phone']
+
+    values = (foundPatient['dentistName'],foundPatient['phone'],foundPatient['regNumber'],foundPatient['dentistId'])
+    dentalClinicDAO.update_patient(values)
+    return jsonify(foundPatient)
+
+
+# Delete patient
+# curl -X DELETE http://127.0.0.1:5000/patients/1
+@app.route("/patients/<int:patientId>", methods=['DELETE'])
+def delete_patient(patientId):
+    dentalClinicDAO.delete_patient(patientId)
+    return jsonify({"Done":True})
+
 
 
 if __name__ == "__main__":

@@ -7,3 +7,11 @@ CREATE TABLE dentist (
     regNumber  varchar(255),
     UNIQUE KEY unique_regNumber (regNumber)
     );
+
+CREATE TABLE patient (
+    patientId int AUTO_INCREMENT PRIMARY KEY,
+    patientName varchar(255) NOT NULL,
+    phone int,
+    dentistId int NOT NULL,
+    FOREIGN key (dentistId) REFERENCES dentist(dentistId)
+    );
