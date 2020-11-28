@@ -1,11 +1,20 @@
-from flask import Flask, request, abort, jsonify, render_template
+from flask import Flask, request, abort, jsonify, render_template, session, url_for
 from DentistDAO import dentistDAO
 
 app = Flask(__name__, static_url_path='', static_folder='templates')
+app.secret_key = 'someKey'
 
 @app.route('/')
 def index():
     return render_template("index.html")
+
+@app.route("/login", methods=['GET','POST'])
+def login():
+    return render_template()
+
+@app.route("/<usr>", methods=['GET','POST'])
+def user(usr):
+    return "<h1>Hello, {usr} </h1>"
 
 # Get all
 @app.route('/dentists')

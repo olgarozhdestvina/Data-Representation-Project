@@ -1,49 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- CSS -->
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Olga's Dental Clinic</title>
     <style>
-        /* Define preferred and "fallback" fonts. Set margin, and height to 100% as a part of moving the footer to the bottom  */
+        /* General setting for body */
         body {
             font-family: Times, Helvetica, sans-serif;
             font-size: 16px;
         }
 
-        /* Make box flexible, wrap items on resizing the window. */
-        #form {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        /* Set background and text colour for all buttons */
-        button {
-            background-color: #15132098;
-            color: white;
-            border: none;
-            padding: 5px;
-            margin-right: 5px;
-            margin-left: 5px;
-            border-radius: 15%;
-            box-shadow: 5px 5px 10px #3d3b3b;
-        }
-
-        .delete-back {
-            background-color: #8b141498;
-        }
-
-        /* Zoom in on buttons and change text colour */
-        button:hover {
-            transform: scale(1.08);
-            font-weight: bold;
-        }
-
-        /* Set the padding of the header and background. Center text and set its colour  */
+        /* Header  */
         header {
             padding: 5px;
             text-align: center;
@@ -51,44 +21,6 @@
             color: white;
         }
 
-        #grid {
-            font-weight: bold;
-            padding: 12px;
-            background: #161f27;
-            color: white;
-
-        }
-
-        label {
-            margin: 10px;
-            font-weight: bold;
-        }
-
-        /* Set background colour and padding. Set height and top margin so to keep the footer at the bottom of the screen, but with a thin line for visual separation */
-        footer {
-            position: fixed; 
-            padding: 10px 10px 0px 10px; 
-            bottom: 0; 
-            width: 100%; 
-            /* Height of the footer*/  
-            height: 100px; 
-            background: #ddd;
-
-        }
-
-        /* Center text, define its font size, display the links as a centrally floating block and move it from the top of the footer */
-        #footbox {
-            display: block;
-            float: center;
-            text-align: center;
-            font-size: 13px;
-            margin-top: 13px;
-        }
-
-        .text-hover:hover {
-            color: #1abc9c;
-            font-weight: bold;
-        }
         img {
             float: center;
             width: 50px;
@@ -106,6 +38,69 @@
 			to {transform: rotateY(180deg);}
 		}
 
+        #grid {
+            font-weight: bold;
+            padding: 12px;
+            background: #161f27;
+            color: white;
+        }
+
+        /* Form */
+        #form {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        label {
+            margin: 10px;
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        button {
+            background-color: #15132098;
+            color: white;
+            border: none;
+            padding: 5px;
+            margin-right: 5px;
+            margin-left: 5px;
+            border-radius: 15%;
+            box-shadow: 5px 5px 10px #3d3b3b;
+        }
+
+        .delete-back {
+            background-color: #8b141498;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            position: fixed; 
+            padding: 10px 10px 0px 10px; 
+            bottom: 0; 
+            width: 100%; 
+            /* Height of the footer*/  
+            height: 100px; 
+            background: #ddd;
+
+        }
+
+        #footbox {
+            display: block;
+            float: center;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 13px;
+        }
+
+        .text-hover:hover {
+            color: #1abc9c;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -158,23 +153,21 @@
             <!-- Register Number -->
             <label for="regNumber">Register Number</label>
             <input type="text" name="regNumber" class="form-control" id="formGroupExampleInput" placeholder="e.g. 34/M9"><br />
-            <span><button id="doCreateButton" onclick="doCreate()">Create</button></span>
-            <span><button id="doUpdateButton" onclick="doUpdate()">Update</button></span>
+            <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
+            <span><button type="submit" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
             <span><button id="goBackButton" class="delete-back" onclick="return goBack()">Back</button></span>
         </div>
     </form>
     <div>
         <button id="showCreateButton" onclick="showCreate()">Add Dentist</button>
     </div>
-
-    <!-- Footer -->
-    <footer>
+     <!-- Footer -->
+     <footer>
         <div id="footbox">
             <p class="text-hover">OLGA's DENTAL CLINIC</p>
             <p class="text-hover">Project assessment for Data Representation GMIT 2020</p>
         </div>
     </footer>
-</body>
 <script type="text/javascript">
     function showCreate() {
         document.getElementById('showCreateButton').style.display = "none"
