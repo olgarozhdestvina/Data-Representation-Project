@@ -1,3 +1,4 @@
+from logging import raiseExceptions
 import mysql.connector
 from mysql.connector.errors import Error
 import dbconfig as cfg
@@ -22,6 +23,9 @@ class DentalClinicDAO:
             return cursor.lastrowid
         except Error as err:
             print("Creation of a new dentist failed:", err)
+            exit(1)
+
+            
 
     # Create a patient
     def create_patient(self, values):
@@ -33,6 +37,7 @@ class DentalClinicDAO:
             return cursor.lastrowid
         except Error as err:
             print("Creation of a new patient failed:", err)
+            
 
     # Get all dentists
     def get_all_dentists(self):
@@ -105,6 +110,7 @@ class DentalClinicDAO:
             self.db.commit()
         except Error as err:
             print("Creation of a new patient failed: ", err)
+        
 
     # Delete dentist.
     def delete_dentist(self, dentistId):

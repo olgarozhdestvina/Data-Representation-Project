@@ -13,7 +13,7 @@ db = mysql.connector.connect(
 def create_dentist_table():
     try:
         cursor = db.cursor()
-        sql = "CREATE TABLE dentist (dentistId int AUTO_INCREMENT PRIMARY KEY, dentistName varchar(255) NOT NULL CHECK (dentistName <> ''), position varchar(255), regNumber varchar(255), UNIQUE KEY unique_regNumber (regNumber))"
+        sql = "CREATE TABLE dentist (dentistId int AUTO_INCREMENT PRIMARY KEY, dentistName varchar(255) NOT NULL CHECK (dentistName <> ''), position varchar(255), regNumber varchar(255) CHECK (regNumber <> ''), UNIQUE KEY unique_regNumber (regNumber))"
         cursor.execute(sql)
         print("Table DENTIST created.")
     except Error as err:

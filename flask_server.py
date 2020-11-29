@@ -9,8 +9,8 @@ app.permanent_session_lifetime = timedelta(hours=1)
 
 # Main page
 @app.route('/')
-def index():
-    return render_template("index.html")
+def home():
+    return render_template("patients.html")
 
 # Login
 @app.route("/login", methods=['GET','POST'])

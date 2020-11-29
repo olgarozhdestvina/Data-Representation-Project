@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Index{% endblock %}
+{% block title %}Patients{% endblock %}
     {% block content %}
         <!-- Login/logout messages-->
         {% with messages = get_flashed_messages()%}
@@ -11,14 +11,14 @@
         {% endwith %}
     <!-- Table-->
     <div>
-        <table class="table" id="dentistTable">
-            <caption>List of currently employed dentists</caption>
+        <table class="table" id="patientTable">
+            <caption>List of patients</caption>
             <thead class="thead-dark">
                 <tr>
+                    <th scope="col">Patient ID</th>
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Phone</th>
                     <th scope="col">Dentist ID</th>
-                    <th scope="col">Dentist Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Register Number</th>
                     <th scope="col">Update</th>
                     <th scope="col">Delete</th>
                 </tr>
@@ -30,29 +30,23 @@
     <form>
         <div class="form-group" id='createUpdateForm' style="display: none">
             <div id="grid">
-                <span id="createLabel">Add</span> <span id="updateLabel">update</span>Dentist
+                <span id="createLabel">Add</span> <span id="updateLabel">update</span>Patient
             </div>
-            <!-- ID -->
             <div class="col-sm-5">
-                <input type="hidden" name="dentistId" />
+                <!-- Patient ID -->
+                <input type="hidden" name="patientId" />
 
-                <!-- Dentist Name -->
-                <label for="dentistName">Dentist Name</label>
-                <input type="text" name="dentistName" class= "form-control" placeholder="e.g. John Smith" required><br />
+                <!-- Patient Name -->
+                <label for="patientName">Patient Name</label>
+                <input type="text" name="patientName" class= "form-control" placeholder="e.g. John Smith" required><br />
                 
-                <!-- Position -->
-                <label for="position">Position</label>
-                <select class="form-control" name="position">
-                    <option selected value="General Dentist">General Dentist</option>
-                    <option value="Implantologist">Implantologist</option>
-                    <option value="Endodontist">Endodontist</option>
-                    <option value="Orthodontist">Orthodontist</option>
-                    <option value="Maxillofacial surgeon">Maxillofacial Surgeon</option>
-                </select><br />
+                <!-- Phone -->
+                <label for="phone">Phone</label>
+                <input type="text" name="phone" class= "form-control" placeholder="0895481372" required><br />
                 
-                <!-- Register Number -->
-                <label for="regNumber">Register Number</label>
-                <input type="text" name="regNumber" class="form-control" placeholder="e.g. 34/M9" required><br />
+                <!-- Dentist ID -->
+                <label for="phone">Dentist ID</label>
+                <input type="text" name="dentistId" class="form-control" placeholder="Leave empty if no dentist assigned"><br />
                 <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
                 <span><button type="submit" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
                 <span><button id="goBackButton" class="delete-back" onclick="return goBack()">Back</button></span>
@@ -60,7 +54,7 @@
         </div>
     </form>
     <div>
-        <button id="showCreateButton" onclick="showCreate()">Add Dentist</button>
+        <button id="showCreateButton" onclick="showCreate()">Add patient</button>
     </div>
     {% endblock %}
 
@@ -68,7 +62,7 @@
 <script type="text/javascript">
     function showCreate() {
         document.getElementById('showCreateButton').style.display = "none"
-        document.getElementById('dentistTable').style.display = "none"
+        document.getElementById('patientTable').style.display = "none"
         document.getElementById('createUpdateForm').style.display = "block"
 
         document.getElementById('createLabel').style.display = "inline"
@@ -81,12 +75,12 @@
     }
     function showViewAll() {
         document.getElementById('showCreateButton').style.display = "block"
-        document.getElementById('dentistTable').style.display = "block"
+        document.getElementById('patientTable').style.display = "block"
         document.getElementById('createUpdateForm').style.display = "none"
     }
     function showUpdate(buttonElement) {
         document.getElementById('showCreateButton').style.display = "none"
-        document.getElementById('dentistTable').style.display = "none"
+        document.getElementById('patientTable').style.display = "none"
         document.getElementById('createUpdateForm').style.display = "block"
 
         document.getElementById('createLabel').style.display = "none"
@@ -97,8 +91,8 @@
         document.getElementById('goBackButton').style.display = "inline"
 
         var rowElement = buttonElement.parentNode.parentNode
-        var dentist = getDentistFromRow(rowElement)
-        populateFormWithDentist(dentist)
+        var patient = getPatientFromRow(rowElement)
+        populateFormWithPatient(patient)
     }
     // adapted from https://stackoverflow.com/questions/26517974/javascript-redirect-not-working-anyway/26518061#26518061
     function goBack(){
@@ -106,50 +100,52 @@
         return false;
     }
 
-    // Create.
-    function doCreate() {
+     // Create.
+     function doCreate() {
         var form = document.getElementById('createUpdateForm')
-        var dentist = {}
-
-        dentist.dentistName = form.querySelector('input[name="dentistName"]').value
-        dentist.position = form.querySelector('select[name="position"').value
-        dentist.regNumber = form.querySelector('input[name="regNumber"]').value
-        console.log(JSON.stringify(dentist))
-        createDentistAjax(dentist)
+        var patient = {}
+        patient.patientName = form.querySelector('input[name="patientName"]').value
+        patient.phone = form.querySelector('select[name="phone"').value
+        patient.dentistId = form.querySelector('input[name="dentistId"]').value
+        console.log(JSON.stringify(patient))
+        createPatientAjax(patient)
     }
+
     // Update
     function doUpdate() {
-        var dentist = getDentistFromForm();
-        var rowElement = document.getElementById(dentist.dentistId);
-        updateDentistAjax(dentist);
-        setDentistInRow(rowElement, dentist);
+        var patient = getPatientFromForm();
+        var rowElement = document.getElementById(patient.patientId);
+        updatePatientAjax(patient);
+        setPatientInRow(rowElement, patient);
 
         clearForm();
         showViewAll();
     }
     // Delete
     function doDelete(r) {
+        // Confirm with the user deletion of the requested entry.
         if (!confirm('Are you sure you want to delete this entry from the database?')) {
             return false;
         }
-        var tableElement = document.getElementById('dentistTable');
+        var tableElement = document.getElementById('patientTable');
         var rowElement = r.parentNode.parentNode;
         var index = rowElement.rowIndex;
-        deleteDentistAjax(rowElement.getAttribute("dentistId"));
+        deletePatientAjax(rowElement.getAttribute("patientId"));
         tableElement.deleteRow(index);
     }
-    function addDentistToTable(dentist) {
-        var tableElement = document.getElementById('dentistTable')
+    
+    function addPatientToTable(patient) {
+        var tableElement = document.getElementById('patientTable')
         var rowElement = tableElement.insertRow(-1)
-        rowElement.setAttribute('dentistId', dentist.dentistId)
+        rowElement.setAttribute('patientId', patient.patientId)
         var cell1 = rowElement.insertCell(0);
-        cell1.innerHTML = dentist.dentistId
+        cell1.innerHTML = patient.patientId
         var cell2 = rowElement.insertCell(1);
-        cell2.innerHTML = dentist.dentistName
+        cell2.innerHTML = patient.patientName
         var cell3 = rowElement.insertCell(2);
-        cell3.innerHTML = dentist.position
+        cell3.innerHTML = patient.phone
         var cell4 = rowElement.insertCell(3);
-        cell4.innerHTML = dentist.regNumber
+        cell4.innerHTML = patient.dentistId
         var cell5 = rowElement.insertCell(4);
         cell5.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
         var cell6 = rowElement.insertCell(5);
@@ -158,89 +154,93 @@
 
     function clearForm() {
         var form = document.getElementById('createUpdateForm')
-        form.querySelector('input[name="dentistName"]').value = ''
-        form.querySelector('select[name="position"]').value = ''
-        form.querySelector('input[name="regNumber"]').value = ''
+        form.querySelector('input[name="patientName"]').value = ''
+        form.querySelector('select[name="phone"]').value = ''
+        form.querySelector('input[name="dentistId"]').value = ''
     }
-    function getDentistFromRow(rowElement) {
-        var car = {}
-        dentist.dentistId = rowElement.getAttribute('dentistId')
-        dentist.dentistName = rowElement.cells[1].firstChild.textContent
-        dentist.position = rowElement.cells[2].firstChild.textContent
-        dentist.regNumber = rowElement.cells[3].firstChild.textContent
-        return dentist
+    function getPatientFromRow(rowElement) {
+        var patient = {}
+        patient.patientId = rowElement.getAttribute('patientId')
+        patient.patientName = rowElement.cells[1].firstChild.textContent
+        patient.phone = rowElement.cells[2].firstChild.textContent
+        patient.dentistId = rowElement.cells[3].firstChild.textContent
+        return patient
     }
-    function setDentistInRow(rowElement, dentist) {
-        rowElement.cells[0].firstChild.textContent = dentist.dentistId
-        rowElement.cells[1].firstChild.textContent = dentist.dentistName
-        rowElement.cells[2].firstChild.textContent = dentist.position
-        rowElement.cells[3].firstChild.textContent = dentist.regNumber
+    function setPatientInRow(rowElement, patient) {
+        rowElement.cells[0].firstChild.textContent = patient.patientId
+        rowElement.cells[1].firstChild.textContent = patient.patientName
+        rowElement.cells[2].firstChild.textContent = patient.phone
+        rowElement.cells[3].firstChild.textContent = patient.dentistId
     }
-    function populateFormWithDentist(dentist) {
+    function populateFormWithPatient(patient) {
         var form = document.getElementById('createUpdateForm')
-        form.querySelector('input[name="dentistId"]').disabled = true
+        form.querySelector('input[name="patientId"]').disabled = true
 
-        form.querySelector('input[name="dentistId"]').value = dentist.dentistId
-        form.querySelector('input[name="dentistName"]').value = dentist.dentistName
-        form.querySelector('select[name="position"]').value = dentist.position
-        form.querySelector('input[name="regNumber"]').value = dentist.regNumber
-        return dentist
+        form.querySelector('input[name="patientId"]').value = patient.patientId
+        form.querySelector('input[name="patientName"]').value = patient.patientName
+        form.querySelector('select[name="phone"]').value = patient.phone
+        form.querySelector('input[name="dentistId"]').value = patient.dentistId
+        return patient
     }
-    function getDentistFromForm() {
+    function getPatientFromForm() {
         var form = document.getElementById('createUpdateForm')
-        var dentist = {}
-        dentist.dentistId = form.querySelector('input[name="dentistId"]').value
-        dentist.dentistName = form.querySelector('input[name="dentistName"]').value
-        dentist.position = form.querySelector('select[name="position"]').value
-        dentist.regNumber = form.querySelector('input[name="regNumber"]').value
-        console.log(JSON.stringify(dentist))
-        return dentist
+        var patient = {}
+        patient.patientId = form.querySelector('input[name="patientId"]').value
+        patient.patientName = form.querySelector('input[name="patientName"]').value
+        patient.phone = form.querySelector('select[name="phone"]').value
+        patient.dentistId = form.querySelector('input[name="dentistId"]').value
+        console.log(JSON.stringify(patient))
+        return patient
     }
     function getAllAjax() {
         $.ajax({
-            "url": "http://127.0.0.1:5000/dentists",
+            "url": "http://127.0.0.1:5000/patients",
             "method": "GET",
             "data": "",
             "dataType": "JSON",
             "error": function (xhr, status, error) {
                 if (xhr.status == 404) {
-                    alert('Page is not found [404] - Click \'OK\' and try to re-submit your entries.');
+                    alert('Page is not found');
                 } else if (xhr.status == 500) {
-                    alert('Internal Server Error. [500] - Click \'OK\' and try to re-submit your entries');
+                    alert('Internal Server Error.');
                 } else if (error === 'parsererror') {
-                    alert('Requested JSON parse failed - Click \'OK\' and try to re-submit your entries');
+                    alert('Requested JSON parse failed');
                 } else if (error === 'timeout') {
-                    alert('Time out error - Click \'OK\' and try to re-submit your entries');
+                    alert('Time out error');
                 } else if (error === 'abort') {
-                    alert('Ajax request aborted - Click \'OK\' and try to re-submit your entries');
-                }
-                else if (error === 'Duplicate entry') {
-                    alert('Duplicate entry - Click \'OK\' and try to re-submit your responses');
+                    alert('Ajax request aborted');
                 } else {
                     alert('Uncaught Error.\n' + xhr.responseText + ' - Click \'OK\' and try to re-submit your entries');
                 }
             },
             "success": function (result) {
                 //console.log(result);
-                for (dentist of result) {
-                    addDentistToTable(dentist);
+                for (patient of result) {
+                    addPatientToTable(patient);
             }}
         });
 
     }
-    function createDentistAjax(dentist) {
-        console.log(JSON.stringify(dentist));
+     function createPatientAjax(patient) {
+        console.log(JSON.stringify(patient));
         $.ajax({
-            "url": "http://127.0.0.1:5000/dentists",
+            "url": "http://127.0.0.1:5000/patients",
             "method": "POST",
-            "data": JSON.stringify(dentist),
+            "data": JSON.stringify(patient),
             "dataType": "JSON",
             contentType: "application/json; charset=utf-8",
+            "success": function (result) {
+                //console.log(result);
+                patient.patientId = result.patientId
+                addPatientToTable(patient)
+                clearForm()
+                showViewAll()
+            },
             "error": function (xhr, status, error) {
                 if (xhr.status == 404) {
-                    alert('Page is not found [404] - Click \'OK\' and try to re-submit your entries.');
+                    alert('Page is not found - Click \'OK\' and try to re-submit your entries.');
                 } else if (xhr.status == 500) {
-                    alert('Internal Server Error. [500] - Click \'OK\' and try to re-submit your entries');
+                    alert('Check for empty entries - Click \'OK\' and try to re-submit your entries');
                 } else if (error === 'parsererror') {
                     alert('Requested JSON parse failed - Click \'OK\' and try to re-submit your entries');
                 } else if (error === 'timeout') {
@@ -248,34 +248,25 @@
                 } else if (error === 'abort') {
                     alert('Ajax request aborted - Click \'OK\' and try to re-submit your entries');
                 }
-                else if (error === 'Duplicate entry') {
-                    alert('Duplicate entry - Click \'OK\' and try to re-submit your responses');
-                } else {
+                else {
                     alert('Uncaught Error.\n' + xhr.responseText + ' - Click \'OK\' and try to re-submit your entries');
                 }
-            },
-            "success": function (result) {
-                //console.log(result);
-                dentist.dentistId = result.dentistId
-                addDentistToTable(dentist)
-                clearForm()
-                showViewAll()
             }
         });
     }
-    function updateDentistAjax(dentist) {
-        console.log(JSON.stringify(dentist));
+    function updatePatientAjax(patient) {
+        console.log(JSON.stringify(patient));
         $.ajax({
-            "url": "http://127.0.0.1:5000/dentists/" + encodeURI(dentist.dentistId),
+            "url": "http://127.0.0.1:5000/patients/" + encodeURI(patient.patientId),
             "method": "PUT",
-            "data": JSON.stringify(dentist),
+            "data": JSON.stringify(patient),
             "dataType": "JSON",
             contentType: "application/json; charset=utf-8",
             "error": function (xhr, status, error) {
                 if (xhr.status == 404) {
-                    alert('Page is not found [404] - Click \'OK\' and try to re-submit your entries.');
+                    alert('Page is not found - Click \'OK\' and try to re-submit your entries.');
                 } else if (xhr.status == 500) {
-                    alert('Internal Server Error. [500] - Click \'OK\' and try to re-submit your entries');
+                    alert('Check for empty entries - Click \'OK\' and try to re-submit your entries');
                 } else if (error === 'parsererror') {
                     alert('Requested JSON parse failed - Click \'OK\' and try to re-submit your entries');
                 } else if (error === 'timeout') {
@@ -283,9 +274,7 @@
                 } else if (error === 'abort') {
                     alert('Ajax request aborted - Click \'OK\' and try to re-submit your entries');
                 }
-                else if (error === 'Duplicate entry') {
-                    alert('Duplicate entry - Click \'OK\' and try to re-submit your responses');
-                } else {
+                else {
                     alert('Uncaught Error.\n' + xhr.responseText + ' - Click \'OK\' and try to re-submit your entries');
                 }
             },
@@ -294,18 +283,18 @@
             }
         });
     }
-    function deleteDentistAjax(dentistId) {
+    function deletePatientAjax(patientId) {
         $.ajax({
-            "url": "http://127.0.0.1:5000/dentists/" + encodeURI(dentistId),
+            "url": "http://127.0.0.1:5000/patients/" + encodeURI(patientId),
             "method": "DELETE",
             "data": "",
             "dataType": "JSON",
             contentType: "application/json; charset=utf-8",
             "error": function (xhr, status, error) {
                 if (xhr.status == 404) {
-                    alert('Page is not found [404] - Click \'OK\' and try to re-submit your entries.');
+                    alert('Page is not found - Click \'OK\' and try to re-submit your entries.');
                 } else if (xhr.status == 500) {
-                    alert('Internal Server Error. [500] - Click \'OK\' and try to re-submit your entries');
+                    alert('Check for empty entries - Click \'OK\' and try to re-submit your entries');
                 } else if (error === 'parsererror') {
                     alert('Requested JSON parse failed - Click \'OK\' and try to re-submit your entries');
                 } else if (error === 'timeout') {
@@ -313,9 +302,7 @@
                 } else if (error === 'abort') {
                     alert('Ajax request aborted - Click \'OK\' and try to re-submit your entries');
                 }
-                else if (error === 'Duplicate entry') {
-                    alert('Duplicate entry - Click \'OK\' and try to re-submit your responses');
-                } else {
+                else {
                     alert('Uncaught Error.\n' + xhr.responseText + ' - Click \'OK\' and try to re-submit your entries');
                 }
             },

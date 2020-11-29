@@ -1,4 +1,3 @@
-from configparser import Error
 from DentalClinicDAO import dentalClinicDAO
 
 # DENTISTS
