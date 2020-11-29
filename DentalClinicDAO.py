@@ -22,7 +22,7 @@ class DentalClinicDAO:
     # Create a patient
     def create_patient(self, values):
         cursor = self.db.cursor()
-        sql = "INSERT INTO patient (patientName, phone) values (%s, %s)"
+        sql = "INSERT INTO patient (patientName, phone, dentistId) values (%s, %s, %s)"
         cursor.execute(sql, values)
         self.db.commit()
         return cursor.lastrowid
@@ -77,7 +77,7 @@ class DentalClinicDAO:
     # Update patient.
     def update_patient(self, values):
         cursor = self.db.cursor()
-        sql = "UPDATE patient SET patientName = %s, phone = %s WHERE patientId = %s"
+        sql = "UPDATE patient SET patientName = %s, phone = %s, dentistId= %s WHERE patientId = %s"
         cursor.execute(sql, values)
         self.db.commit()
 

@@ -29,32 +29,34 @@
     <!-- Update Form -->
     <form>
         <div class="form-group" id='createUpdateForm' style="display: none">
-            <p id="grid">
+            <div id="grid">
                 <span id="createLabel">Add</span> <span id="updateLabel">update</span>Dentist
-            </p>
+            </div>
             <!-- ID -->
-            <input type="hidden" name="dentistId" />
+            <div class="col-sm-5">
+                <input type="hidden" name="dentistId" />
 
-            <!-- Dentist Name -->
-            <label for="dentistName">Dentist Name</label>
-            <input type="text" name="dentistName" class="form-control" id="formGroupExampleInput" placeholder="e.g. John Smith"><br />
-            
-            <!-- Position -->
-            <label for="position">Position</label>
-            <select class="form-control" id="formGroupExampleInput" name="position">
-                <option selected value="General Dentist">General Dentist</option>
-                <option value="Implantologist">Implantologist</option>
-                <option value="Endodontist">Endodontist</option>
-                <option value="Orthodontist">Orthodontist</option>
-                <option value="Maxillofacial surgeon">Maxillofacial Surgeon</option>
-            </select><br />
-            
-            <!-- Register Number -->
-            <label for="regNumber">Register Number</label>
-            <input type="text" name="regNumber" class="form-control" id="formGroupExampleInput" placeholder="e.g. 34/M9"><br />
-            <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
-            <span><button type="submit" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
-            <span><button id="goBackButton" class="delete-back" onclick="return goBack()">Back</button></span>
+                <!-- Dentist Name -->
+                <label for="dentistName">Dentist Name</label>
+                <input type="text" name="dentistName" class= "form-control" placeholder="e.g. John Smith" required><br />
+                
+                <!-- Position -->
+                <label for="position">Position</label>
+                <select class="form-control" name="position">
+                    <option selected value="General Dentist">General Dentist</option>
+                    <option value="Implantologist">Implantologist</option>
+                    <option value="Endodontist">Endodontist</option>
+                    <option value="Orthodontist">Orthodontist</option>
+                    <option value="Maxillofacial surgeon">Maxillofacial Surgeon</option>
+                </select><br />
+                
+                <!-- Register Number -->
+                <label for="regNumber">Register Number</label>
+                <input type="text" name="regNumber" class="form-control" placeholder="e.g. 34/M9" required><br />
+                <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
+                <span><button type="submit" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
+                <span><button id="goBackButton" class="delete-back" onclick="return goBack()">Back</button></span>
+            </div>
         </div>
     </form>
     <div>
@@ -200,16 +202,29 @@
             "method": "GET",
             "data": "",
             "dataType": "JSON",
+            "error": function (xhr, status, error) {
+                if (xhr.status == 404) {
+                    alert('Page is not found [404] - Click \'OK\' and try to re-submit your entries.');
+                } else if (xhr.status == 500) {
+                    alert('Internal Server Error. [500] - Click \'OK\' and try to re-submit your entries');
+                } else if (error === 'parsererror') {
+                    alert('Requested JSON parse failed - Click \'OK\' and try to re-submit your entries');
+                } else if (error === 'timeout') {
+                    alert('Time out error - Click \'OK\' and try to re-submit your entries');
+                } else if (error === 'abort') {
+                    alert('Ajax request aborted - Click \'OK\' and try to re-submit your entries');
+                }
+                else if (error === 'Duplicate entry') {
+                    alert('Duplicate entry - Click \'OK\' and try to re-submit your responses');
+                } else {
+                    alert('Uncaught Error.\n' + xhr.responseText + ' - Click \'OK\' and try to re-submit your entries');
+                }
+            },
             "success": function (result) {
                 //console.log(result);
                 for (dentist of result) {
                     addDentistToTable(dentist);
-                }
-
-            },
-            "error": function (xhr, status, error) {
-                console.log("error: " + status + " msg:" + error);
-            }
+            }}
         });
 
     }
@@ -221,15 +236,30 @@
             "data": JSON.stringify(dentist),
             "dataType": "JSON",
             contentType: "application/json; charset=utf-8",
+            "error": function (xhr, status, error) {
+                if (xhr.status == 404) {
+                    alert('Page is not found [404] - Click \'OK\' and try to re-submit your entries.');
+                } else if (xhr.status == 500) {
+                    alert('Internal Server Error. [500] - Click \'OK\' and try to re-submit your entries');
+                } else if (error === 'parsererror') {
+                    alert('Requested JSON parse failed - Click \'OK\' and try to re-submit your entries');
+                } else if (error === 'timeout') {
+                    alert('Time out error - Click \'OK\' and try to re-submit your entries');
+                } else if (error === 'abort') {
+                    alert('Ajax request aborted - Click \'OK\' and try to re-submit your entries');
+                }
+                else if (error === 'Duplicate entry') {
+                    alert('Duplicate entry - Click \'OK\' and try to re-submit your responses');
+                } else {
+                    alert('Uncaught Error.\n' + xhr.responseText + ' - Click \'OK\' and try to re-submit your entries');
+                }
+            },
             "success": function (result) {
                 //console.log(result);
                 dentist.dentistId = result.dentistId
                 addDentistToTable(dentist)
                 clearForm()
                 showViewAll()
-            },
-            "error": function (xhr, status, error) {
-                console.log("error: " + status + " msg:" + error);
             }
         });
     }
@@ -241,12 +271,26 @@
             "data": JSON.stringify(dentist),
             "dataType": "JSON",
             contentType: "application/json; charset=utf-8",
+            "error": function (xhr, status, error) {
+                if (xhr.status == 404) {
+                    alert('Page is not found [404] - Click \'OK\' and try to re-submit your entries.');
+                } else if (xhr.status == 500) {
+                    alert('Internal Server Error. [500] - Click \'OK\' and try to re-submit your entries');
+                } else if (error === 'parsererror') {
+                    alert('Requested JSON parse failed - Click \'OK\' and try to re-submit your entries');
+                } else if (error === 'timeout') {
+                    alert('Time out error - Click \'OK\' and try to re-submit your entries');
+                } else if (error === 'abort') {
+                    alert('Ajax request aborted - Click \'OK\' and try to re-submit your entries');
+                }
+                else if (error === 'Duplicate entry') {
+                    alert('Duplicate entry - Click \'OK\' and try to re-submit your responses');
+                } else {
+                    alert('Uncaught Error.\n' + xhr.responseText + ' - Click \'OK\' and try to re-submit your entries');
+                }
+            },
             "success": function (result) {
                 // console.log(result);
-
-            },
-            "error": function (xhr, status, error) {
-                console.log("error: " + status + " msg:" + error);
             }
         });
     }
@@ -257,11 +301,26 @@
             "data": "",
             "dataType": "JSON",
             contentType: "application/json; charset=utf-8",
-            "success": function (result) {
-            
-            },
             "error": function (xhr, status, error) {
-                console.log("error: " + status + " msg:" + error);
+                if (xhr.status == 404) {
+                    alert('Page is not found [404] - Click \'OK\' and try to re-submit your entries.');
+                } else if (xhr.status == 500) {
+                    alert('Internal Server Error. [500] - Click \'OK\' and try to re-submit your entries');
+                } else if (error === 'parsererror') {
+                    alert('Requested JSON parse failed - Click \'OK\' and try to re-submit your entries');
+                } else if (error === 'timeout') {
+                    alert('Time out error - Click \'OK\' and try to re-submit your entries');
+                } else if (error === 'abort') {
+                    alert('Ajax request aborted - Click \'OK\' and try to re-submit your entries');
+                }
+                else if (error === 'Duplicate entry') {
+                    alert('Duplicate entry - Click \'OK\' and try to re-submit your responses');
+                } else {
+                    alert('Uncaught Error.\n' + xhr.responseText + ' - Click \'OK\' and try to re-submit your entries');
+                }
+            },
+            "success": function (result) {
+                // console.log(result);
             }
         });
     }

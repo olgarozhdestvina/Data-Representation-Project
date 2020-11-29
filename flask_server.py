@@ -124,23 +124,24 @@ def find_by_patientId(patientId):
     return jsonify(dentalClinicDAO.find_by_patientId(patientId))
 
 # Create patient
-# curl -X POST -H "content-type:application/json" -d "{\"patientName\": \"Siobhan Fahey\", \"phone\": \"0895546575\"}" http://127.0.0.1:5000/patients
+# curl -X POST -H "content-type:application/json" -d "{\"patientName\": \"Siobhan Fahey\", \"phone\":\"0875467686\", \"dentistId\":null}" http://127.0.0.1:5000/patients
 @app.route('/patients', methods=['POST'])
 def create_patient():
     if not request.json:
         abort(400)
     patient = {
         "patientName": request.json["patientName"],
-        "phone": request.json["phone"]
+        "phone": request.json["phone"],
+        "dentistId": request.json["dentistId"]
     }
-    values =(patient['patientName'],patient['phone'])
+    values =(patient['patientName'],patient['phone'],patient["dentistId"])
     newId = dentalClinicDAO.create_patient(values)
     patient['patientId'] = newId
     return jsonify(patient)
 
 
 # Update patient
-# curl -X PUT -H "content-type:application/json" -d "{\"patientName\": \"Siobhan Fahey\", \"phone\": \"0875467686\"}" http://127.0.0.1:5000/patients/1
+# curl -X PUT -H "content-type:application/json" -d "{\"patientName\": \"Siobhan Fay\", \"phone\":\"0895467690\", \"dentistId\":null}" http://127.0.0.1:5000/patients/1
 @app.route('/patients/<int:patientId>', methods=['PUT'])
 def update_patient(patientId):
     foundPatient = dentalClinicDAO.find_by_patientId(patientId)
@@ -148,14 +149,14 @@ def update_patient(patientId):
         abort(404)
     if not request.json:
         abort(400)
-    if 'phone' in request.json and type(request.json['phone']) is not int:
-        abort(400)
     if 'patientName' in request.json:
         foundPatient['patientName'] = request.json['patientName']
     if 'phone' in request.json:
         foundPatient['phone'] = request.json['phone']
+    if 'dentistId' in request.json:
+        foundPatient['dentistId'] = request.json['dentistId']
 
-    values = (foundPatient['dentistName'],foundPatient['phone'],foundPatient['regNumber'],foundPatient['dentistId'])
+    values = (foundPatient['patientName'],foundPatient['phone'],foundPatient['patientId'],foundPatient['dentistId'])
     dentalClinicDAO.update_patient(values)
     return jsonify(foundPatient)
 
@@ -166,7 +167,6 @@ def update_patient(patientId):
 def delete_patient(patientId):
     dentalClinicDAO.delete_patient(patientId)
     return jsonify({"Done":True})
-
 
 
 if __name__ == "__main__":

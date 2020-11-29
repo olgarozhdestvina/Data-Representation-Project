@@ -1,3 +1,4 @@
+from configparser import Error
 from DentalClinicDAO import dentalClinicDAO
 
 # DENTISTS
@@ -32,7 +33,7 @@ def check_dentists():
 def check_patients():
     print("PATIENTS")
     # Create.
-    latest_patient_id  = dentalClinicDAO.create_patient(('Caroline Smith', '0872239565'))
+    latest_patient_id  = dentalClinicDAO.create_patient(('Caroline Smith', '0872239565', None))
     print(f"New patient was added to the records")
 
     # Get All.
@@ -44,7 +45,7 @@ def check_patients():
     print(f"Found by id {returnValue}")
 
     # Update.
-    returnValue = dentalClinicDAO.update_patient(('Caroline Spillane', '0892239568', latest_patient_id))
+    returnValue = dentalClinicDAO.update_patient(('Caroline Spillane', '0892239568', None, latest_patient_id))
     print(f"Updated patient with id {latest_patient_id}")
 
     # Delete.
@@ -54,6 +55,8 @@ def check_patients():
     # Get All dentist again.
     returnValue = dentalClinicDAO.get_all_patients()
     print(f"All patients {returnValue}")
+
+    
 
 check_dentists()
 check_patients()
