@@ -10,44 +10,44 @@ app.permanent_session_lifetime = timedelta(hours=1)
 # Main page
 @app.route('/')
 def home():
-    return render_template("patients.html")
+    return render_template('patients.html')
 
 # Login
-@app.route("/login", methods=['GET','POST'])
+@app.route('/login', methods=['GET','POST'])
 def login():
-    if request.method == "POST":
+    if request.method == 'POST':
         # set session
         session.permanenet = True
         # get username from the form
-        user = request.form["nm"]
+        user = request.form['nm']
         # store it in session
-        session["user"] = user
-        flash("Successfully logged in")
-        return redirect(url_for("user"))
+        session['user'] = user
+        flash('Successfully logged in')
+        return redirect(url_for('user'))
     else:
-        if "user" in session:
-            flash("Already logged in")
-            return redirect(url_for("user"))
-        return render_template("login.html")
+        if 'user' in session:
+            flash('Already logged in')
+            return redirect(url_for('user'))
+        return render_template('login.html')
 
 
-@app.route("/databases", methods=['GET','POST'])
+@app.route('/databases', methods=['GET','POST'])
 def database():
     # check if user is in session
-    if "user" in session:
-        user = session["user"]
-        return render_template("databases.html", user=user)
+    if 'user' in session:
+        user = session['user']
+        return render_template('databases.html', user=user)
     else:
-        flash("Please login to access this page")
-        return redirect(url_for("login"))
+        flash('Please login to access this page')
+        return redirect(url_for('login'))
 
 # Logout
-@app.route("/logout")
+@app.route('/logout')
 def logout():
-    session.pop("user", None)
+    session.pop('user', None)
     # Only display the message if user is in the session
-    flash(f"You have been logged out", "info")
-    return redirect(url_for("login"))
+    flash(f'You have been logged out', 'info')
+    return redirect(url_for('login'))
 
 
 # DENTIST TABLE
@@ -59,7 +59,7 @@ def get_all_dentists():
 
 # Find by dentistId
 # curl http://127.0.0.1:5000/dentists/5
-@app.route("/dentists/<int:dentistId>")
+@app.route('/dentists/<int:dentistId>')
 def find_by_dentistId(dentistId):
     return jsonify(dentalClinicDAO.find_by_dentistId(dentistId))
 
@@ -70,9 +70,9 @@ def create_dentist():
     if not request.json:
         abort(400)
     dentist = {
-        "dentistName": request.json["dentistName"],
-        "position": request.json["position"],
-        "regNumber": request.json["regNumber"]
+        'dentistName': request.json['dentistName'],
+        'position': request.json['position'],
+        'regNumber': request.json['regNumber']
     }
     values =(dentist['dentistName'],dentist['position'],dentist['regNumber'])
     newId = dentalClinicDAO.create_dentist(values)
@@ -103,10 +103,10 @@ def update_dentist(dentistId):
 
 # Delete dentist
 # curl -X DELETE http://127.0.0.1:5000/dentists/1
-@app.route("/dentists/<int:dentistId>", methods=['DELETE'])
+@app.route('/dentists/<int:dentistId>', methods=['DELETE'])
 def delete_dentist(dentistId):
     dentalClinicDAO.delete_dentist(dentistId)
-    return jsonify({"Done":True})
+    return jsonify({'Done':True})
 
 
 
@@ -118,30 +118,31 @@ def get_all_patients():
     return jsonify(dentalClinicDAO.get_all_patients())
 
 # Find by patientId
-# curl http://127.0.0.1:5000/patients/5
-@app.route("/patients/<int:patientId>")
+# curl http://127.0.0.1:5000/patients/1
+@app.route('/patients/<int:patientId>')
 def find_by_patientId(patientId):
     return jsonify(dentalClinicDAO.find_by_patientId(patientId))
 
 # Create patient
-# curl -X POST -H "content-type:application/json" -d "{\"patientName\": \"Siobhan Fahey\", \"phone\":\"0875467686\", \"dentistId\":null}" http://127.0.0.1:5000/patients
+# Make sure there is at least one dentist in the dentist table to be able to create a patient as tables are connected on foreign key. 
+# curl -X POST -H "content-type:application/json" -d "{\"patientName\": \"Sinead Howe\", \"phone\": \"0895467690\", \"dentistId\":1}" http://127.0.0.1:5000/patients
 @app.route('/patients', methods=['POST'])
 def create_patient():
     if not request.json:
         abort(400)
     patient = {
-        "patientName": request.json["patientName"],
-        "phone": request.json["phone"],
-        "dentistId": request.json["dentistId"]
+        'patientName': request.json['patientName'],
+        'phone': request.json['phone'],
+        'dentistId': request.json['dentistId']
     }
-    values =(patient['patientName'],patient['phone'],patient["dentistId"])
+    values =(patient['patientName'],patient['phone'],patient['dentistId'])
     newId = dentalClinicDAO.create_patient(values)
     patient['patientId'] = newId
     return jsonify(patient)
 
 
 # Update patient
-# curl -X PUT -H "content-type:application/json" -d "{\"patientName\": \"Siobhan Fay\", \"phone\":\"0895467690\", \"dentistId\":null}" http://127.0.0.1:5000/patients/1
+# curl -X PUT -H "content-type:application/json" -d "{\"patientName\": \"Sinead Howe\", \"phone\": \"0895467690\", \"dentistId\":1}" http://127.0.0.1:5000/patients/1
 @app.route('/patients/<int:patientId>', methods=['PUT'])
 def update_patient(patientId):
     foundPatient = dentalClinicDAO.find_by_patientId(patientId)
@@ -156,18 +157,18 @@ def update_patient(patientId):
     if 'dentistId' in request.json:
         foundPatient['dentistId'] = request.json['dentistId']
 
-    values = (foundPatient['patientName'],foundPatient['phone'],foundPatient['patientId'],foundPatient['dentistId'])
+    values = (foundPatient['patientName'],foundPatient['phone'],foundPatient['dentistId'],foundPatient['patientId'])
     dentalClinicDAO.update_patient(values)
     return jsonify(foundPatient)
 
 
 # Delete patient
 # curl -X DELETE http://127.0.0.1:5000/patients/1
-@app.route("/patients/<int:patientId>", methods=['DELETE'])
+@app.route('/patients/<int:patientId>', methods=['DELETE'])
 def delete_patient(patientId):
     dentalClinicDAO.delete_patient(patientId)
-    return jsonify({"Done":True})
+    return jsonify({'Done':True})
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)

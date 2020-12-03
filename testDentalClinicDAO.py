@@ -4,8 +4,10 @@ from DentalClinicDAO import dentalClinicDAO
 # Create.
 def check_dentists():
     print("DENTISTS")
-    latest_dentist_id = dentalClinicDAO.create_dentist(('Victor Hugo', 'General Dentist', '120/M'))
-    print(f"New dentist was added to the records")
+    # Create two dentists.
+    dentalClinicDAO.create_dentist(('Max Smith', 'General Dentist', '120/M'))
+    latest_dentist_id = dentalClinicDAO.create_dentist(('Victor Hugo', 'Implantologist', '34/6M'))
+    print(f"New dentists were added to the records")
 
     # Get All.
     returnValue = dentalClinicDAO.get_all_dentists()
@@ -16,7 +18,7 @@ def check_dentists():
     print(f"Found by id {returnValue}")
 
     # Update.
-    returnValue = dentalClinicDAO.update_dentist(('Victor Hugo', 'endodontist', '120/M', latest_dentist_id))
+    returnValue = dentalClinicDAO.update_dentist(('Victor Hugo', 'Endodontist', '34/6M', latest_dentist_id))
     print(f"Updated dentist with id {latest_dentist_id}")
 
     # Delete.
@@ -32,7 +34,7 @@ def check_dentists():
 def check_patients():
     print("PATIENTS")
     # Create.
-    latest_patient_id  = dentalClinicDAO.create_patient(('Caroline Smith', '0872239565', None))
+    latest_patient_id  = dentalClinicDAO.create_patient(('Caroline Smith', '0872239565', 1))
     print(f"New patient was added to the records")
 
     # Get All.
@@ -44,7 +46,7 @@ def check_patients():
     print(f"Found by id {returnValue}")
 
     # Update.
-    returnValue = dentalClinicDAO.update_patient(('Caroline Spillane', '0892239568', None, latest_patient_id))
+    returnValue = dentalClinicDAO.update_patient(('Caroline Spillane', '0892239568', 1, latest_patient_id))
     print(f"Updated patient with id {latest_patient_id}")
 
     # Delete.
