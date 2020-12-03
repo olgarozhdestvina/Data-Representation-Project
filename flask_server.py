@@ -1,3 +1,4 @@
+from re import template
 from flask import Flask, request, abort, jsonify, render_template, session, url_for, redirect, flash
 from datetime import timedelta
 from DentalClinicDAO import dentalClinicDAO
@@ -10,7 +11,8 @@ app.permanent_session_lifetime = timedelta(hours=1)
 # Main page
 @app.route('/')
 def home():
-    return render_template('patients.html')
+    return render_template("index.html")
+
 
 # Login
 @app.route('/login', methods=['GET','POST'])
@@ -23,23 +25,13 @@ def login():
         # store it in session
         session['user'] = user
         flash('Successfully logged in')
-        return redirect(url_for('user'))
+        return redirect(url_for('home'))
     else:
         if 'user' in session:
             flash('Already logged in')
-            return redirect(url_for('user'))
+            return redirect(url_for('home'))
         return render_template('login.html')
 
-
-@app.route('/databases', methods=['GET','POST'])
-def database():
-    # check if user is in session
-    if 'user' in session:
-        user = session['user']
-        return render_template('databases.html', user=user)
-    else:
-        flash('Please login to access this page')
-        return redirect(url_for('login'))
 
 # Logout
 @app.route('/logout')
@@ -48,6 +40,29 @@ def logout():
     # Only display the message if user is in the session
     flash(f'You have been logged out', 'info')
     return redirect(url_for('login'))
+
+
+# Dentist database
+@app.route('/dentist_database')
+def get_dentist_database():
+    # check if user is in session
+    if 'user' in session:
+        user = session['user']
+        return render_template("dentists.html", user=user)
+    else:
+        flash('Please login to access this page')
+        return redirect(url_for('login'))
+   
+
+# Patient database
+@app.route('/patient_database')
+def get_patient_database():
+    if 'user' in session:
+        user = session['user']
+        return render_template("patients.html", user=user)
+    else:
+        flash('Please login to access this page')
+        return redirect(url_for('login'))
 
 
 # DENTIST TABLE

@@ -63,8 +63,11 @@ Packages and modules used to complete the project:
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
 
+----
+
 
 #### Acknowledgment <a name="acknowledgment"></a>
 
-- GMIT Lecturers: [Andrew Beatty](https://github.com/andrewbeattycourseware) 
+- GMIT Lecturer [Andrew Beatty](https://github.com/andrewbeattycourseware) 
 - [Stack Overflow](https://stackoverflow.com/)
+- [Tech With Tim: Flask Tutorials](https://www.youtube.com/playlist?list=PLzMcBGfZo4-n4vJJybUVV3Un_NFS5EOgX)

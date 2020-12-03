@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+    <!-- Login/logout messages-->
+    {% block content %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <p>{{msg}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+<!-- Form -->
+<div class="wrapper">
+    <div class="left_box">
+        <a href='/dentist_database' class="nav-link intro_txt">DENTIST DATABASE</a>
+        <img src="https://cdn.onlinewebfonts.com/svg/img_490649.png" class="box_image" alt="dentist image">
+    </div>
+    <div class="right_box">
+        <a href='/patient_database' class="nav-link intro_txt">PATIENT DATABASE</a>
+        <img src="https://i.pinimg.com/originals/0a/5f/17/0a5f17fdfbedf2e13bb1c70c2878046c.png" class="box_image" alt="dentist image">      
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>
