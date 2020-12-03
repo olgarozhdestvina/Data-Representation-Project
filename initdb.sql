@@ -13,5 +13,5 @@ CREATE TABLE patient (
     patientName varchar(255) NOT NULL CHECK (patientName <> ''),
     phone int,
     dentistId int NOT NULL,
-    FOREIGN key (dentistId) REFERENCES dentist(dentistId)
+    FOREIGN KEY (dentistId) REFERENCES dentist(dentistId)
     );
