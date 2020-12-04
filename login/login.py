@@ -27,12 +27,12 @@ def login():
         elif not password:
             error = "Password is required"
         elif error is None:
-            flash('Successfully logged in')
+            flash('Successfully logged in', 'success')
             return redirect(url_for('home'))
-        flash(error)
+        flash(error, 'error')
     else:
         if 'user' in session:
-            flash('Already logged in')
+            flash('Already logged in', 'info')
             return redirect(request.referrer)
         return render_template('login.html')
 
@@ -53,7 +53,7 @@ def get_dentist_database():
         user = session['user']
         return render_template("dentists.html", user=user)
     else:
-        flash('Please login to access this page')
+        flash('Please login to access this page', 'warning')
         return redirect(url_for('log.login'))
 
 # Access patient database
@@ -63,5 +63,5 @@ def get_patient_database():
         user = session['user']
         return render_template("patients.html", user=user)
     else:
-        flash('Please login to access this page')
+        flash('Please login to access this page', 'warning')
         return redirect(url_for('log.login'))

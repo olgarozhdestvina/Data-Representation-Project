@@ -71,3 +71,4 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 - GMIT Lecturer [Andrew Beatty](https://github.com/andrewbeattycourseware) 
 - [Stack Overflow](https://stackoverflow.com/)
 - [Tech With Tim: Flask Tutorials](https://www.youtube.com/playlist?list=PLzMcBGfZo4-n4vJJybUVV3Un_NFS5EOgX)
+- [teclado: Flashing messages with Flask](https://blog.tecladocode.com/flashing-messages-with-flask)

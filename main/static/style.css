@@ -30,6 +30,7 @@ header {
     to {transform: rotateY(180deg);}
 }
 
+/* Table */
 #grid {
     font-weight: bold;
     padding: 12px;
@@ -73,11 +74,8 @@ button:hover {
 /* Footer */
 footer {
     position: fixed; 
-    padding: 10px 10px 0px 10px; 
     bottom: 0; 
     width: 100%; 
-    /* Height of the footer*/  
-    height: 100px; 
     background: #ddd;
 
 }
@@ -87,13 +85,16 @@ footer {
     float: center;
     text-align: center;
     font-size: 13px;
-    margin-top: 13px;
+    margin-top: 10px;
 }
 
 .text-hover:hover {
     color: #29adfa;
     font-weight: bold;
 }
+
+
+/* For the main page */
 .wrapper {
     display:flex;
     

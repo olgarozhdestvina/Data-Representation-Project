@@ -1,66 +1,58 @@
 {% extends "base.html" %}
 {% block script %}<script src="{{ url_for('static', filename='dentists.js')}}" type="text/javascript"></script>{% endblock %}
-{% block title %}Index{% endblock %}
-    {% block content %}
-        <!-- Login/logout messages-->
-        {% with messages = get_flashed_messages()%}
-            {% if messages %}
-                {% for msg in messages %}
-                    <p>{{msg}}</p>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    <!-- Table-->
-    <div>
-        <table class="table" id="dentistTable">
-            <caption>List of currently employed dentists</caption>
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Dentist ID</th>
-                    <th scope="col">Dentist Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Register Number</th>
-                    <th scope="col">Update</th>
-                    <th scope="col">Delete</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    
-    <!-- Update Form -->
-    <form>
-        <div class="form-group" id='createUpdateForm' style="display: none">
-            <div id="grid">
-                <span id="createLabel">Add</span> <span id="updateLabel">Update</span> Dentist
-            </div>
-            <!-- ID -->
-            <div class="col-sm-5">
-                <input type="hidden" name="dentistId" />
-    
-                <!-- Dentist Name -->
-                <label for="dentistName">Dentist Name</label>
-                <input type="text" name="dentistName" class="form-control" placeholder="e.g. John Smith" required><br />
-    
-                <!-- Position -->
-                <label for="position">Position</label>
-                <select class="form-control" name="position">
-                    <option selected value="General Dentist">General Dentist</option>
-                    <option value="Implantologist">Implantologist</option>
-                    <option value="Endodontist">Endodontist</option>
-                    <option value="Orthodontist">Orthodontist</option>
-                    <option value="Maxillofacial surgeon">Maxillofacial Surgeon</option>
-                </select><br />
-    
-                <!-- Register Number -->
-                <label for="regNumber">Register Number</label>
-                <input type="text" name="regNumber" class="form-control" placeholder="e.g. 34/M9" required><br />
-                <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
-                <span><button type="submit" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
-                <span><button id="goBackButton" class="delete-back" onclick="return goBack()">Back</button></span>
-            </div>
+{% block title %}Dentists{% endblock %}
+{% block content %}
+<!-- Table-->
+<div>
+    <table class="table" id="dentistTable">
+        <caption>List of currently employed dentists</caption>
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Dentist ID</th>
+                <th scope="col">Dentist Name</th>
+                <th scope="col">Position</th>
+                <th scope="col">Register Number</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<!-- Update Form -->
+<form>
+    <div class="form-group" id='createUpdateForm' style="display: none">
+        <div id="grid">
+            <span id="createLabel">Add</span> <span id="updateLabel">Update</span> Dentist
         </div>
-    </form>
-    <div>
-        <button id="showCreateButton" onclick="showCreate()">Add Dentist</button>
+        <!-- ID -->
+        <div class="col-sm-5">
+            <input type="hidden" name="dentistId" />
+
+            <!-- Dentist Name -->
+            <label for="dentistName">Dentist Name</label>
+            <input type="text" name="dentistName" class="form-control" placeholder="e.g. John Smith" required><br />
+
+            <!-- Position -->
+            <label for="position">Position</label>
+            <select class="form-control" name="position">
+                <option selected value="General Dentist">General Dentist</option>
+                <option value="Implantologist">Implantologist</option>
+                <option value="Endodontist">Endodontist</option>
+                <option value="Orthodontist">Orthodontist</option>
+                <option value="Maxillofacial surgeon">Maxillofacial Surgeon</option>
+            </select><br />
+
+            <!-- Register Number -->
+            <label for="regNumber">Register Number</label>
+            <input type="text" name="regNumber" class="form-control" placeholder="e.g. 34/M9" required><br />
+            <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
+            <span><button type="submit" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
+            <span><button id="goBackButton" class="delete-back" onclick="return goBack()">Back</button></span>
+        </div>
     </div>
-    {% endblock %}
+</form>
+<div>
+    <button id="showCreateButton" onclick="showCreate()">Add Dentist</button>
+</div>
+{% endblock %}

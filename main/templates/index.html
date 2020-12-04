@@ -1,15 +1,6 @@
 {% extends "base.html" %}
 {% block title %}DENTAL CLINIC{% endblock %}
-
-    <!-- Login/logout messages-->
-    {% block content %}
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for msg in messages %}
-                    <p>{{msg}}</p>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+{% block content %}
 <!-- Form -->
 <div class="wrapper">
     <div class="left_box">
