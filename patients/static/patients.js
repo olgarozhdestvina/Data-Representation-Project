@@ -246,4 +246,41 @@ function deletePatientAjax(patientId) {
         }
     });
 }
+
+function addDentistIdToSelect(dentist) {
+    var select = document.getElementById('dentistIds');
+    var option = document.createElement("option");
+    option.text = dentist.dentistId;
+    select.add(option);
+}
+
+function getDentistIds() {
+    $.ajax({
+        "url": "http://127.0.0.1:5000/dentists",
+        "method": "GET",
+        "data": "",
+        "dataType": "JSON",
+        "error": function (xhr, status, error) {
+            if (xhr.status == 404) {
+                alert('Page is not found');
+            } else if (xhr.status == 500) {
+                alert('Internal Server Error.');
+            } else if (error === 'parsererror') {
+                alert('Requested JSON parse failed');
+            } else if (error === 'timeout') {
+                alert('Time out error');
+            } else if (error === 'abort') {
+                alert('Ajax request aborted');
+            } else {
+                alert('Uncaught Error.\n' + xhr.responseText + ' - Click \'OK\' and try to re-submit your entries');
+            }
+        },
+        "success": function (result) {
+            //console.log(result);
+            for (dentist of result) {
+                addDentistIdToSelect(dentist);
+            }
+        }
+    });
+}
 getAllAjax();
