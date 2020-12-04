@@ -1,4 +1,3 @@
-from logging import raiseExceptions
 import mysql.connector
 from mysql.connector.errors import Error
 import dbconfig as cfg
@@ -135,8 +134,6 @@ class DentalClinicDAO:
         except Error as err:
             print(f"Failed to delete the patient with id {patientId}", err)
         
-
-
     # convert tuples to dictionary objects
     def convert_to_dict_dentist(self, result):
         colnames = ['dentistId', 'dentistName','position','regNumber']

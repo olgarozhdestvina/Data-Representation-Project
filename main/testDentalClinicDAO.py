@@ -1,4 +1,4 @@
-from DentalClinicDAO import dentalClinicDAO
+from main.DentalClinicDAO import dentalClinicDAO
 
 # DENTISTS
 # Create.
