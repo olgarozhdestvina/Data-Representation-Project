@@ -1,0 +1,131 @@
+ /* General setting for body */
+body {
+    font-family: Times, Helvetica, sans-serif;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Header  */
+header {
+    padding: 5px;
+    text-align: center;
+    background: #426280;
+    color: white;
+}
+
+#tooth_image {
+    float: center;
+    width: 50px;
+    margin: 5px;
+    -webkit-animation: mymove 2s infinite linear alternate;
+     /* Chrome, Safari, Opera */
+    animation: mymove 2s infinite ease-in alternate;
+    animation-delay: 1s;
+}
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+    to {-webkit-transform: rotateY(180deg);}
+}
+@keyframes mymove {
+    to {transform: rotateY(180deg);}
+}
+
+#grid {
+    font-weight: bold;
+    padding: 12px;
+    background: #161f27;
+    color: white;
+}
+
+/* Form */
+#form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+label {
+    margin: 10px;
+    font-weight: bold;
+    
+}
+
+/* Buttons */
+button {
+    background-color: #15132098;
+    color: white;
+    border: none;
+    padding: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-radius: 15%;
+    box-shadow: 5px 5px 10px #3d3b3b;
+}
+
+.delete-back {
+    background-color: #8b141498;
+}
+
+button:hover {
+    transform: scale(1.08);
+    color: #88d0fa;
+}
+
+/* Footer */
+footer {
+    position: fixed; 
+    padding: 10px 10px 0px 10px; 
+    bottom: 0; 
+    width: 100%; 
+    /* Height of the footer*/  
+    height: 100px; 
+    background: #ddd;
+
+}
+
+#footbox {
+    display: block;
+    float: center;
+    text-align: center;
+    font-size: 13px;
+    margin-top: 13px;
+}
+
+.text-hover:hover {
+    color: #29adfa;
+    font-weight: bold;
+}
+.wrapper {
+    display:flex;
+    
+}
+.left_box {
+    background: rgb(201, 228, 236);
+    height: 100%;
+    width: 50%;
+    position: fixed;
+}
+.right_box {
+    background: rgb(201, 228, 236);
+    height: 100%;
+    width: 50%;
+    left: 50%;
+    position: fixed;         
+}
+
+.intro_txt {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.box_image {
+    position: relative;
+    display:flex;
+    flex-direction:column;
+    margin: auto;
+    height: 50%;
+    width: 40%;
+    border: 9px solid;
+    border-color: white;
+    border-style: double;
+    padding: 5px;
+}

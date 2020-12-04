@@ -3,7 +3,7 @@ from flask import Flask, request, abort, jsonify, render_template, session, url_
 from datetime import timedelta
 from DentalClinicDAO import dentalClinicDAO
 
-app = Flask(__name__, static_url_path='', static_folder='templates')
+app = Flask(__name__)
 app.secret_key = 'someKey'
 # store session for 1 hour
 app.permanent_session_lifetime = timedelta(hours=1)
