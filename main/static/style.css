@@ -1,4 +1,4 @@
- /* General setting for body */
+/* General setting for body */
 body {
     font-family: Times, Helvetica, sans-serif;
     font-size: 16px;
@@ -46,8 +46,7 @@ header {
 
 label {
     margin: 10px;
-    font-weight: bold;
-    
+    font-weight: bold;  
 }
 
 /* Buttons */
@@ -77,7 +76,6 @@ footer {
     bottom: 0; 
     width: 100%; 
     background: #ddd;
-
 }
 
 #footbox {
@@ -93,18 +91,18 @@ footer {
     font-weight: bold;
 }
 
-
 /* For the main page */
 .wrapper {
-    display:flex;
-    
+    display: flex;  
 }
+
 .left_box {
     background: rgb(201, 228, 236);
     height: 100%;
     width: 50%;
     position: fixed;
 }
+
 .right_box {
     background: rgb(201, 228, 236);
     height: 100%;

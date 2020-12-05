@@ -1,52 +1,62 @@
+<!-- Patient Database -->
+
 {% extends "base.html" %}
-{% block script %}<script src="{{ url_for('patient_table.static', filename='patients.js')}}" type="text/javascript"></script>{% endblock %}
+{% block script %}
+<script src="{{ url_for('patient_table.static', filename='patients.js')}}" type="text/javascript"></script>
+{% endblock %}
 {% block title %}Patients{% endblock %}
-    {% block content %}
-    <!-- Table-->
-    <div>
-        <table class="table" id="patientTable">
-            <caption>List of patients</caption>
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Patient ID</th>
-                    <th scope="col">Patient Name</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Dentist ID</th>
-                    <th scope="col">Update</th>
-                    <th scope="col">Delete</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    
-    <!-- Update Form -->
-    <form>
-        <div class="form-group" id='createUpdateForm' style="display: none">
-            <div id="grid">
-                <span id="createLabel">Add</span> <span id="updateLabel">update</span> Patient
-            </div>
-            <div class="col-sm-5">
-                <!-- Patient ID -->
-                <input type="hidden" name="patientId" />
-    
-                <!-- Patient Name -->
-                <label for="patientName">Patient Name</label>
-                <input type="text" name="patientName" class="form-control" placeholder="e.g. John Smith"><br />
-    
-                <!-- Phone -->
-                <label for="phone">Phone</label>
-                <input type="number" name="phone" class="form-control" placeholder="0895481372"><br />
-    
-                <!-- Dentist ID -->
-                <label for="dentistId">Dentist ID</label>
-                <select id="dentistIds" name="dentistId"  class="form-control" onclick="getDentistIds(); this.onclick=null;"></select><br>
-                <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
-                <span><button type="submit" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
-                <span><button id="goBackButton" class="delete-back" onclick="return goBack()">Back</button></span>
-            </div>
+{% block content %}
+<!-- Table-->
+<div>
+    <table class="table" id="patientTable">
+        <caption>List of patients</caption>
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Patient ID</th>
+                <th scope="col">Patient Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Dentist ID</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<!-- Update Form -->
+<form>
+    <div class="form-group" id='createUpdateForm' style="display: none">
+        <div id="grid">
+            <span id="createLabel">Add</span> <span id="updateLabel">update</span> Patient
         </div>
-    </form>
-    <div>
-        <button id="showCreateButton" onclick="showCreate()">Add patient</button>
+        <div class="col-sm-5">
+
+            <!-- Patient ID -->
+            <input type="hidden" name="patientId" />
+
+            <!-- Patient Name -->
+            <label for="patientName">Patient Name</label>
+            <input type="text" name="patientName" class="form-control" placeholder="e.g. John Smith"><br />
+
+            <!-- Phone -->
+            <label for="phone">Phone</label>
+            <input type="number" name="phone" class="form-control" placeholder="0895481372"><br />
+
+            <!-- Dentist ID -->
+            <label for="dentistId">Dentist ID</label>
+            <select id="dentistIds" name="dentistId" class="form-control"
+                onclick="getDentistIds(); this.onclick=null;"></select><br>
+
+            <!-- Buttons -->
+            <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
+            <span><button type="submit" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
+            <span><button id="goBackButton" class="delete-back" onclick="return goBack()">Back</button></span>
+        </div>
     </div>
-    {% endblock %}
+</form>
+
+<!-- Create button -->
+<div>
+    <button id="showCreateButton" onclick="showCreate()">Add patient</button>
+</div>
+{% endblock %}

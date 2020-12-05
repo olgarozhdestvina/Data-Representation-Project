@@ -1,15 +1,17 @@
-# Login and access databases
+# LOGIN AND DATABASE ACCESS.
 
 from flask import request, render_template, session, url_for, redirect, flash, Blueprint
 from datetime import timedelta
 
-log = Blueprint("log", __name__, static_folder="static", template_folder="templates")
+# Create a blueprint.
+log = Blueprint("log", __name__, static_folder="static",
+                template_folder="templates")
 
-# Store session for 1 hour
+# Store session.
 log.permanent_session_lifetime = timedelta(minutes=5)
 
-# Login
-@log.route('/', methods=['GET','POST'])
+# Login.
+@log.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         # set session
@@ -36,8 +38,7 @@ def login():
             return redirect(request.referrer)
         return render_template('login.html')
 
-
-# Logout
+# Logout.
 @log.route('/logout')
 def logout():
     session.pop('user', None)
@@ -45,7 +46,7 @@ def logout():
     flash(f'You have been logged out', 'info')
     return redirect(url_for('log.login'))
 
-# Access dentist database
+# Access the dentist database.
 @log.route('/dentist_database')
 def get_dentist_database():
     # check if user is in session
@@ -56,7 +57,7 @@ def get_dentist_database():
         flash('Please login to access this page', 'warning')
         return redirect(url_for('log.login'))
 
-# Access patient database
+# Access the patient database.
 @log.route('/patient_database')
 def get_patient_database():
     if 'user' in session:

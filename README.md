@@ -31,8 +31,6 @@ The repository contains a web application project Dental clinic.
 Applications used for completion of the tasks are 
   * [Visual Studio Code](https://code.visualstudio.com/),
   * [cmder](http://cmder.net/)
- 
-
 
 Distribution of Python is [Anaconda Python distribution](https://www.anaconda.com/). 
 
@@ -70,6 +68,7 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 
 - GMIT Lecturer [Andrew Beatty](https://github.com/andrewbeattycourseware) 
 - [Stack Overflow](https://stackoverflow.com/)
+- [Bootstrap](https://getbootstrap.com/)
 - [Tech With Tim: Flask Tutorials](https://www.youtube.com/playlist?list=PLzMcBGfZo4-n4vJJybUVV3Un_NFS5EOgX)
 - [teclado](https://blog.tecladocode.com)
 - [Caspio](https://forums.caspio.com/)

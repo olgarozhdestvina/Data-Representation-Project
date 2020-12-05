@@ -1,7 +1,10 @@
+# Create two tables dentist and patient in the dentalclinic.
+
 import mysql.connector
 from mysql.connector.errors import Error
 import dbconfig as cfg
 
+# Connect to the database.
 db = mysql.connector.connect(
     host=cfg.mysql["host"],
     user=cfg.mysql["user"],
@@ -9,7 +12,7 @@ db = mysql.connector.connect(
     database=cfg.mysql["database"]
 )
 
-# Dentist Table
+# Dentist Table.
 def create_dentist_table():
     try:
         cursor = db.cursor()
@@ -20,7 +23,7 @@ def create_dentist_table():
         print("Creation of dentist_table failed:", err)
         exit(1)
 
-# Patient Table
+# Patient Table.
 def create_patient_table():
     try:
         cursor = db.cursor()
@@ -31,5 +34,6 @@ def create_patient_table():
         print("Creation of patient_table failed:", err)
         exit(1)
 
+# Call the functions.
 create_dentist_table()
 create_patient_table()

@@ -1,3 +1,5 @@
+<!-- Base HTML template -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,10 +18,12 @@
 </head>
 
 <body>
+    <!-- Header -->
     <header>
         <img src="https://pngimage.net/wp-content/uploads/2018/05/diente-logo-png-3.png" id="tooth_image" alt="dental_image"/>
         <p>WELCOME TO DENTIST DATABASE</p>
     </header>
+
         <!-- Navigation menu -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 5px">
             <a href="/" class="navbar-brand" style="font-size: 17px">DATABASES</a>
@@ -35,6 +39,7 @@
                     <li class="nav-item">
                         <a href='/login/patient_database' class="nav-link">PATIENTS</a>
                     </li>
+
                     <!-- Change login/logout options in the nav
                     adapted from https://stackoverflow.com/questions/41416411/flask-signing-in-and-signing-out -->
                     {% if 'user' in session %}
@@ -49,6 +54,7 @@
                 </ul>
             </div>
         </nav>
+
         <!-- Login/logout messages
         adapted from https://blog.tecladocode.com/flashing-messages-with-flask/ -->
         {% with messages = get_flashed_messages() %}
@@ -60,6 +66,7 @@
         {% endwith %}
         {% block content %}
         {% endblock %}
+        
      <!-- Footer -->
      <footer>
         <div id="footbox">

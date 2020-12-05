@@ -1,7 +1,11 @@
-// Remember user's name and password
-// Adapted from https://forums.caspio.com/topic/8448-add-a-checkbox-remember-me/
+/* LOGIN JS.
+
+Remember user's name and password, save user's name and password.
+Adapted from https://forums.caspio.com/topic/8448-add-a-checkbox-remember-me/ 
+*/
 $(function() {
  
+    // If remember me is checked
     if (localStorage.chkbx && localStorage.chkbx != '') {
         $('#remember_me').attr('checked', 'checked');
         $('#user_name').val(localStorage.usrname);
@@ -12,6 +16,7 @@ $(function() {
         $('#user_password').val('');
     }
 
+    // If not checked, removed clear user's name and password.
     $('#remember_me').click(function() {
 
         if ($('#remember_me').is(':checked')) {

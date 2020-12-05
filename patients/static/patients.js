@@ -1,66 +1,77 @@
-function showCreate() {
-    document.getElementById('showCreateButton').style.display = "none"
-    document.getElementById('patientTable').style.display = "none"
-    document.getElementById('createUpdateForm').style.display = "block"
+// PATIENT JS.
 
-    document.getElementById('createLabel').style.display = "inline"
-    document.getElementById('updateLabel').style.display = "none"
-
-    document.getElementById('doCreateButton').style.display = "inline"
-    document.getElementById('goBackButton').style.display = "inline"
-    document.getElementById('doUpdateButton').style.display = "none"
-
-}
+// Visability of elements for viewing patients.
 function showViewAll() {
     document.getElementById('showCreateButton').style.display = "block"
     document.getElementById('patientTable').style.display = "block"
     document.getElementById('createUpdateForm').style.display = "none"
 }
-function showUpdate(buttonElement) {
-    document.getElementById('showCreateButton').style.display = "none"
+
+// Visability of elements when creating a new patient.
+function showCreate() {
+    // Table and form.
     document.getElementById('patientTable').style.display = "none"
     document.getElementById('createUpdateForm').style.display = "block"
+    // Labels.
+    document.getElementById('createLabel').style.display = "inline"
+    document.getElementById('updateLabel').style.display = "none"
+    // Buttons.
+    document.getElementById('showCreateButton').style.display = "none"
+    document.getElementById('doCreateButton').style.display = "inline"
+    document.getElementById('goBackButton').style.display = "inline"
+    document.getElementById('doUpdateButton').style.display = "none"
+}
 
+// Visability of elements when updating a patient.
+function showUpdate(buttonElement) {
+    // Table and form.
+    document.getElementById('patientTable').style.display = "none"
+    document.getElementById('createUpdateForm').style.display = "block"
+    // Labels.
     document.getElementById('createLabel').style.display = "none"
     document.getElementById('updateLabel').style.display = "inline"
-
+    // Buttons.
+    document.getElementById('showCreateButton').style.display = "none"
     document.getElementById('doCreateButton').style.display = "none"
     document.getElementById('doUpdateButton').style.display = "inline"
     document.getElementById('goBackButton').style.display = "inline"
 
+    // Populating form with patient information.
     var rowElement = buttonElement.parentNode.parentNode
     var patient = getPatientFromRow(rowElement)
     populateFormWithPatient(patient)
 }
+
+// Go back button.
 // adapted from https://stackoverflow.com/questions/26517974/javascript-redirect-not-working-anyway/26518061#26518061
 function goBack() {
     window.location = '/login/patient_database';
     return false;
 }
 
+// Create.
 function doCreate() {
     var form = document.getElementById('createUpdateForm')
     var patient = {}
-
     patient.patientName = form.querySelector('input[name="patientName"]').value
     patient.phone = form.querySelector('input[name="phone"]').value
     patient.dentistId = form.querySelector('select[name="dentistId"]').value
-
-    console.log(JSON.stringify(patient))
+    // console.log(JSON.stringify(patient))
     createPatientAjax(patient)
 }
 
-// Update
+// Update.
 function doUpdate() {
     var patient = getPatientFromForm();
     document.getElementById(patient.patientId);
     updatePatientAjax(patient);
-    // setPatientInRow(rowElement, patient);
     clearForm();
     showViewAll();
 }
-// Delete
+
+// Delete.
 function doDelete(r) {
+    // Confirm with the user deletion of the requested entry.
     if (!confirm('Are you sure you want to delete this entry from the database?')) {
         return false;
     }
@@ -70,6 +81,8 @@ function doDelete(r) {
     deletePatientAjax(rowElement.getAttribute("patientId"));
     tableElement.deleteRow(index);
 }
+
+// Adding patient info to the table.
 function addPatientToTable(patient) {
     var tableElement = document.getElementById('patientTable')
     var rowElement = tableElement.insertRow(-1)
@@ -86,35 +99,30 @@ function addPatientToTable(patient) {
     cell5.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
     var cell6 = rowElement.insertCell(5);
     cell6.innerHTML = '<button class="delete-back" onclick=doDelete(this)>Delete</button>'
-
 }
 
-function clearForm() {
-    var form = document.getElementById('createUpdateForm')
-
-    form.querySelector('input[name="patientName"]').value = ''
-    form.querySelector('input[name="phone"]').value = ''
-    form.querySelector('select[name="dentistId"]').value = ''
-}
+// Get patient info from the table.
 function getPatientFromRow(rowElement) {
     var patient = {}
     patient.patientId = rowElement.getAttribute('patientId')
     patient.patientName = rowElement.cells[1].firstChild.textContent
     patient.phone = parseInt(rowElement.cells[2].firstChild.textContent, 10)
     patient.dentistId = rowElement.cells[3].firstChild.textContent
-
     return patient
 }
+
+// Populate the form with with inputted patient info.
 function populateFormWithPatient(patient) {
     var form = document.getElementById('createUpdateForm')
     form.querySelector('input[name="patientId"]').disabled = true
-
     form.querySelector('input[name="patientId"]').value = patient.patientId
     form.querySelector('input[name="patientName"]').value = patient.patientName
     form.querySelector('input[name="phone"]').value = patient.phone
     form.querySelector('select[name="dentistId"]').value = patient.dentistId
     return patient
 }
+
+// Get patient info from the form.
 function getPatientFromForm() {
     var form = document.getElementById('createUpdateForm')
     var patient = {}
@@ -122,10 +130,29 @@ function getPatientFromForm() {
     patient.patientName = form.querySelector('input[name="patientName"]').value
     patient.phone = parseInt(form.querySelector('input[name="phone"]').value, 10)
     patient.dentistId = form.querySelector('select[name="dentistId"]').value
-    console.log(JSON.stringify(patient))
+    // console.log(JSON.stringify(patient))
     return patient
 }
 
+// Populate the dropdown box with existing dentist IDs.
+function addDentistIdToSelect(dentist) {
+    var select = document.getElementById('dentistIds');
+    var option = document.createElement("option");
+    option.text = dentist.dentistId;
+    select.add(option);
+    select.options[0].selected="true";
+}
+
+// Clear form from inputs.
+function clearForm() {
+    var form = document.getElementById('createUpdateForm')
+    form.querySelector('input[name="patientName"]').value = ''
+    form.querySelector('input[name="phone"]').value = ''
+    form.querySelector('select[name="dentistId"]').value = ''
+}
+
+// AJAX CALLS.
+// Get all patients.
 function getAllAjax() {
     $.ajax({
         "url": "http://127.0.0.1:5000/patients",
@@ -155,6 +182,8 @@ function getAllAjax() {
         }
     });
 }
+
+// Create a new patient.
 function createPatientAjax(patient) {
     console.log(JSON.stringify(patient));
     $.ajax({
@@ -188,6 +217,8 @@ function createPatientAjax(patient) {
         }
     });
 }
+
+// Update a patient.
 function updatePatientAjax(patient) {
     console.log(JSON.stringify(patient));
     $.ajax({
@@ -217,6 +248,8 @@ function updatePatientAjax(patient) {
         }
     });
 }
+
+// Delete a patient.
 function deletePatientAjax(patientId) {
     //console.log(JSON.stringify('deleting '+patientId));
     $.ajax({
@@ -247,15 +280,7 @@ function deletePatientAjax(patientId) {
     });
 }
 
-// Populate select with dentist IDs
-function addDentistIdToSelect(dentist) {
-    var select = document.getElementById('dentistIds');
-    var option = document.createElement("option");
-    option.text = dentist.dentistId;
-    select.add(option);
-    select.options[0].selected="true";
-}
-
+// Get existing dentist IDs from the dentist table.
 function getDentistIds() {
     $.ajax({
         "url": "http://127.0.0.1:5000/dentists",
@@ -287,4 +312,5 @@ function getDentistIds() {
     });
 }
 
+// Get all patients on load.
 getAllAjax();

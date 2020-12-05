@@ -1,37 +1,48 @@
-function showCreate() {
-    document.getElementById('showCreateButton').style.display = "none"
-    document.getElementById('dentistTable').style.display = "none"
-    document.getElementById('createUpdateForm').style.display = "block"
+// DENTIST JS.
 
-    document.getElementById('createLabel').style.display = "inline"
-    document.getElementById('updateLabel').style.display = "none"
-
-    document.getElementById('doCreateButton').style.display = "inline"
-    document.getElementById('goBackButton').style.display = "inline"
-    document.getElementById('doUpdateButton').style.display = "none"
-
-}
+// Visability of elements for viewing dentists.
 function showViewAll() {
     document.getElementById('showCreateButton').style.display = "block"
     document.getElementById('dentistTable').style.display = "block"
     document.getElementById('createUpdateForm').style.display = "none"
 }
-function showUpdate(buttonElement) {
-    document.getElementById('showCreateButton').style.display = "none"
+
+// Visability of elements when creating a new dentist.
+function showCreate() {
+    // Table and form.
     document.getElementById('dentistTable').style.display = "none"
     document.getElementById('createUpdateForm').style.display = "block"
+    // Labels.
+    document.getElementById('createLabel').style.display = "inline"
+    document.getElementById('updateLabel').style.display = "none"
+    // Buttons.
+    document.getElementById('showCreateButton').style.display = "none"
+    document.getElementById('doCreateButton').style.display = "inline"
+    document.getElementById('goBackButton').style.display = "inline"
+    document.getElementById('doUpdateButton').style.display = "none"
+}
 
+// Visability of elements when updating a dentist.
+function showUpdate(buttonElement) {
+    // Table and form.
+    document.getElementById('dentistTable').style.display = "none"
+    document.getElementById('createUpdateForm').style.display = "block"
+    // Labels.
     document.getElementById('createLabel').style.display = "none"
     document.getElementById('updateLabel').style.display = "inline"
-
+    // Buttons.
+    document.getElementById('showCreateButton').style.display = "none"
     document.getElementById('doCreateButton').style.display = "none"
     document.getElementById('doUpdateButton').style.display = "inline"
     document.getElementById('goBackButton').style.display = "inline"
 
+    // Populating form with dentist information.
     var rowElement = buttonElement.parentNode.parentNode
     var dentist = getDentistFromRow(rowElement)
     populateFormWithDentist(dentist)
 }
+
+// Go back button.
 // adapted from https://stackoverflow.com/questions/26517974/javascript-redirect-not-working-anyway/26518061#26518061
 function goBack() {
     window.location = '/login/dentist_database';
@@ -49,16 +60,16 @@ function doCreate() {
     createDentistAjax(dentist)
 }
 
-// Update
+// Update.
 function doUpdate() {
     var dentist = getDentistFromForm();
     document.getElementById(dentist.dentistId);
     updateDentistAjax(dentist);
-
     clearForm();
     showViewAll();
 }
-// Delete
+
+// Delete.
 function doDelete(r) {
     // Confirm with the user deletion of the requested entry.
     if (!confirm('Are you sure you want to delete this entry from the database?')) {
@@ -71,6 +82,7 @@ function doDelete(r) {
     tableElement.deleteRow(index);
 }
 
+// Adding dentist info to the table.
 function addDentistToTable(dentist) {
     var tableElement = document.getElementById('dentistTable')
     var rowElement = tableElement.insertRow(-1)
@@ -89,12 +101,7 @@ function addDentistToTable(dentist) {
     cell6.innerHTML = '<button class="delete-back" onclick=doDelete(this)>Delete</button>'
 }
 
-function clearForm() {
-    var form = document.getElementById('createUpdateForm')
-    form.querySelector('input[name="dentistName"]').value = ''
-    form.querySelector('select[name="position"]').value = ''
-    form.querySelector('input[name="regNumber"]').value = ''
-}
+// Get dentist info from the table.
 function getDentistFromRow(rowElement) {
     var dentist = {}
     dentist.dentistId = rowElement.getAttribute('dentistId')
@@ -103,16 +110,19 @@ function getDentistFromRow(rowElement) {
     dentist.regNumber = rowElement.cells[3].firstChild.textContent
     return dentist
 }
+
+// Populate the form with with inputted dentist info.
 function populateFormWithDentist(dentist) {
     var form = document.getElementById('createUpdateForm')
     form.querySelector('input[name="dentistId"]').disabled = true
-
     form.querySelector('input[name="dentistId"]').value = dentist.dentistId
     form.querySelector('input[name="dentistName"]').value = dentist.dentistName
     form.querySelector('select[name="position"]').value = dentist.position
     form.querySelector('input[name="regNumber"]').value = dentist.regNumber
     return dentist
 }
+
+// Get dentist info from the form.
 function getDentistFromForm() {
     var form = document.getElementById('createUpdateForm')
     var dentist = {}
@@ -123,6 +133,17 @@ function getDentistFromForm() {
     console.log(JSON.stringify(dentist))
     return dentist
 }
+
+// Clear form from inputs.
+function clearForm() {
+    var form = document.getElementById('createUpdateForm')
+    form.querySelector('input[name="dentistName"]').value = ''
+    form.querySelector('select[name="position"]').value = ''
+    form.querySelector('input[name="regNumber"]').value = ''
+}
+
+// AJAX CALLS.
+// Get all dentists.
 function getAllAjax() {
     $.ajax({
         "url": "http://127.0.0.1:5000/dentists",
@@ -152,6 +173,8 @@ function getAllAjax() {
         }
     });
 }
+
+// Create a new dentist.
 function createDentistAjax(dentist) {
     console.log(JSON.stringify(dentist));
     $.ajax({
@@ -185,6 +208,8 @@ function createDentistAjax(dentist) {
         }
     });
 }
+
+// Update a dentist.
 function updateDentistAjax(dentist) {
     console.log(JSON.stringify(dentist));
     $.ajax({
@@ -214,6 +239,8 @@ function updateDentistAjax(dentist) {
         }
     });
 }
+
+// Delete a dentist.
 function deleteDentistAjax(dentistId) {
     $.ajax({
         "url": "http://127.0.0.1:5000/dentists/" + encodeURI(dentistId),
@@ -242,4 +269,6 @@ function deleteDentistAjax(dentistId) {
         }
     });
 }
+
+// Get all dentists on load.
 getAllAjax();
