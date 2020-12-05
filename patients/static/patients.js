@@ -252,7 +252,9 @@ function addDentistIdToSelect(dentist) {
     var option = document.createElement("option");
     option.text = dentist.dentistId;
     select.add(option);
+    select.options[0].selected="true";
 }
+
 
 function getDentistIds() {
     $.ajax({
@@ -278,9 +280,11 @@ function getDentistIds() {
         "success": function (result) {
             //console.log(result);
             for (dentist of result) {
+                // console.log(JSON.stringify(dentist.dentistId))
                 addDentistIdToSelect(dentist);
             }
         }
     });
 }
+
 getAllAjax();

@@ -6,7 +6,7 @@ from datetime import timedelta
 log = Blueprint("log", __name__, static_folder="static", template_folder="templates")
 
 # Store session for 1 hour
-log.permanent_session_lifetime = timedelta(hours=1)
+log.permanent_session_lifetime = timedelta(minutes=5)
 
 # Login
 @log.route('/', methods=['GET','POST'])

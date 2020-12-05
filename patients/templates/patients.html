@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block script %}<script src="{{ url_for('static', filename='patients.js')}}" type="text/javascript"></script>{% endblock %}
+{% block script %}<script src="{{ url_for('patient_table.static', filename='patients.js')}}" type="text/javascript"></script>{% endblock %}
 {% block title %}Patients{% endblock %}
     {% block content %}
     <!-- Table-->
@@ -40,7 +40,7 @@
                 <!-- Dentist ID -->
                 <label for="dentistId">Dentist ID</label>
                 <!-- <input type="number" name="dentistId" class="form-control" -->
-                <select id="dentistIds" name="dentistId"  class="form-control" onclick="getDentistIds()"></select>
+                <select id="dentistIds" name="dentistId"  class="form-control" onclick="getDentistIds(); this.onclick=null;"></select><br>
                 <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
                 <span><button type="submit" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
                 <span><button id="goBackButton" class="delete-back" onclick="return goBack()">Back</button></span>
