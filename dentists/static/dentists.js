@@ -194,7 +194,7 @@ function createDentistAjax(dentist) {
             if (xhr.status == 404) {
                 alert('Page is not found - Click \'OK\' and try to re-submit your entries.');
             } else if (xhr.status == 500) {
-                alert('Check for empty entries - Click \'OK\' and try to re-submit your entries');
+                alert('Check for empty entries or duplicate Register Number - Click \'OK\' and try to re-submit your entries');
             } else if (error === 'parsererror') {
                 alert('Requested JSON parse failed - Click \'OK\' and try to re-submit your entries');
             } else if (error === 'timeout') {
@@ -203,7 +203,7 @@ function createDentistAjax(dentist) {
                 alert('Ajax request aborted - Click \'OK\' and try to re-submit your entries');
             }
             else {
-                alert('Uncaught Error.\n' + xhr.responseText + ' - Click \'OK\' and try to re-submit your entries');
+                alert('Check for empty entries or duplicate Register Number.\n' + xhr.responseText + ' - Click \'OK\' and try to re-submit your entries');
             }
         }
     });
@@ -222,7 +222,7 @@ function updateDentistAjax(dentist) {
             if (xhr.status == 404) {
                 alert('Page is not found - Click \'OK\' and try to re-submit your entries.');
             } else if (xhr.status == 500) {
-                alert('Check for empty entries - Click \'OK\' and try to re-submit your entries');
+                alert('Check for empty entries or duplicate Register Number - Click \'OK\' and try to re-submit your entries');
             } else if (error === 'parsererror') {
                 alert('Requested JSON parse failed - Click \'OK\' and try to re-submit your entries');
             } else if (error === 'timeout') {
@@ -231,7 +231,7 @@ function updateDentistAjax(dentist) {
                 alert('Ajax request aborted - Click \'OK\' and try to re-submit your entries');
             }
             else {
-                alert('Uncaught Error.\n' + xhr.responseText + ' - Click \'OK\' and try to re-submit your entries');
+                alert('Check for empty entries or duplicate Register Number.\n' + xhr.responseText + ' - Click \'OK\' and try to re-submit your entries');
             }
         },
         "success": function (result) {
@@ -252,7 +252,7 @@ function deleteDentistAjax(dentistId) {
             if (xhr.status == 404) {
                 alert('Page is not found - Click \'OK\' and try to re-submit your entries.');
             } else if (xhr.status == 500) {
-                alert('Check for empty entries - Click \'OK\' and try to re-submit your entries');
+                alert('Internal Server Error - Click \'OK\' and try to re-submit your entries');
             } else if (error === 'parsererror') {
                 alert('Requested JSON parse failed - Click \'OK\' and try to re-submit your entries');
             } else if (error === 'timeout') {

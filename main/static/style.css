@@ -30,6 +30,44 @@ header {
     to {transform: rotateY(180deg);}
 }
 
+/* For the main page */
+.wrapper {
+    display: flex;  
+}
+
+.left_box {
+    background: rgb(201, 228, 236);
+    height: 100%;
+    width: 50%;
+    position: fixed;
+}
+
+.right_box {
+    background: rgb(201, 228, 236);
+    height: 100%;
+    width: 50%;
+    left: 50%;
+    position: fixed;         
+}
+
+.intro_txt {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.box_image {
+    position: relative;
+    display:flex;
+    flex-direction:column;
+    margin: auto;
+    height: 50%;
+    width: 40%;
+    border: 9px solid;
+    border-color: white;
+    border-style: double;
+    padding: 5px;
+}
+
 /* Table */
 #grid {
     font-weight: bold;
@@ -89,42 +127,4 @@ footer {
 .text-hover:hover {
     color: #29adfa;
     font-weight: bold;
-}
-
-/* For the main page */
-.wrapper {
-    display: flex;  
-}
-
-.left_box {
-    background: rgb(201, 228, 236);
-    height: 100%;
-    width: 50%;
-    position: fixed;
-}
-
-.right_box {
-    background: rgb(201, 228, 236);
-    height: 100%;
-    width: 50%;
-    left: 50%;
-    position: fixed;         
-}
-
-.intro_txt {
-    text-align: center;
-    padding-bottom: 20px;
-}
-
-.box_image {
-    position: relative;
-    display:flex;
-    flex-direction:column;
-    margin: auto;
-    height: 50%;
-    width: 40%;
-    border: 9px solid;
-    border-color: white;
-    border-style: double;
-    padding: 5px;
 }
