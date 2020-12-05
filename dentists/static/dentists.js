@@ -34,7 +34,7 @@ function showUpdate(buttonElement) {
 }
 // adapted from https://stackoverflow.com/questions/26517974/javascript-redirect-not-working-anyway/26518061#26518061
 function goBack() {
-    window.location = '/';
+    window.location = '/login/dentist_database';
     return false;
 }
 

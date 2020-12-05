@@ -31,12 +31,12 @@
 
             <!-- Dentist Name -->
             <label for="dentistName">Dentist Name</label>
-            <input type="text" name="dentistName" class="form-control" placeholder="e.g. John Smith" required><br />
+            <input type="text" name="dentistName" class="form-control" placeholder="e.g. John Smith"><br />
 
             <!-- Position -->
             <label for="position">Position</label>
             <select class="form-control" name="position">
-                <option selected value="General Dentist">General Dentist</option>
+                <option value="General Dentist" selected>General Dentist</option>
                 <option value="Implantologist">Implantologist</option>
                 <option value="Endodontist">Endodontist</option>
                 <option value="Orthodontist">Orthodontist</option>
@@ -45,7 +45,7 @@
 
             <!-- Register Number -->
             <label for="regNumber">Register Number</label>
-            <input type="text" name="regNumber" class="form-control" placeholder="e.g. 34/M9" required><br />
+            <input type="text" name="regNumber" class="form-control" placeholder="e.g. 34/M9"><br />
             <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
             <span><button type="submit" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
             <span><button id="goBackButton" class="delete-back" onclick="return goBack()">Back</button></span>

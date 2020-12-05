@@ -34,7 +34,7 @@ function showUpdate(buttonElement) {
 }
 // adapted from https://stackoverflow.com/questions/26517974/javascript-redirect-not-working-anyway/26518061#26518061
 function goBack() {
-    window.location = '/';
+    window.location = '/login/patient_database';
     return false;
 }
 
@@ -44,7 +44,7 @@ function doCreate() {
 
     patient.patientName = form.querySelector('input[name="patientName"]').value
     patient.phone = form.querySelector('input[name="phone"]').value
-    patient.dentistId = form.querySelector('input[name="dentistId"]').value
+    patient.dentistId = form.querySelector('select[name="dentistId"]').value
 
     console.log(JSON.stringify(patient))
     createPatientAjax(patient)
@@ -85,7 +85,7 @@ function addPatientToTable(patient) {
     var cell5 = rowElement.insertCell(4);
     cell5.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
     var cell6 = rowElement.insertCell(5);
-    cell6.innerHTML = '<button onclick=doDelete(this)>Delete</button>'
+    cell6.innerHTML = '<button class="delete-back" onclick=doDelete(this)>Delete</button>'
 
 }
 
@@ -94,7 +94,7 @@ function clearForm() {
 
     form.querySelector('input[name="patientName"]').value = ''
     form.querySelector('input[name="phone"]').value = ''
-    form.querySelector('input[name="dentistId"]').value = ''
+    form.querySelector('select[name="dentistId"]').value = ''
 }
 function getPatientFromRow(rowElement) {
     var patient = {}
@@ -112,7 +112,7 @@ function populateFormWithPatient(patient) {
     form.querySelector('input[name="patientId"]').value = patient.patientId
     form.querySelector('input[name="patientName"]').value = patient.patientName
     form.querySelector('input[name="phone"]').value = patient.phone
-    form.querySelector('input[name="dentistId"]').value = patient.dentistId
+    form.querySelector('select[name="dentistId"]').value = patient.dentistId
     return patient
 }
 function getPatientFromForm() {
@@ -121,7 +121,7 @@ function getPatientFromForm() {
     patient.patientId = form.querySelector('input[name="patientId"]').value
     patient.patientName = form.querySelector('input[name="patientName"]').value
     patient.phone = parseInt(form.querySelector('input[name="phone"]').value, 10)
-    patient.dentistId = form.querySelector('input[name="dentistId"]').value
+    patient.dentistId = form.querySelector('select[name="dentistId"]').value
     console.log(JSON.stringify(patient))
     return patient
 }
@@ -247,6 +247,7 @@ function deletePatientAjax(patientId) {
     });
 }
 
+// Populate select with dentist IDs
 function addDentistIdToSelect(dentist) {
     var select = document.getElementById('dentistIds');
     var option = document.createElement("option");
@@ -254,7 +255,6 @@ function addDentistIdToSelect(dentist) {
     select.add(option);
     select.options[0].selected="true";
 }
-
 
 function getDentistIds() {
     $.ajax({
