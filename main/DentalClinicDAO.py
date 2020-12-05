@@ -38,7 +38,7 @@ class DentalClinicDAO:
             cursor = db.cursor()
             sql = "INSERT INTO dentist (dentistName, position, regNumber) values (%s, %s, %s)"
             cursor.execute(sql, values)
-            self.db.commit()
+            db.commit()
             lastrowid = cursor.lastrowid
             db.close()
             return lastrowid

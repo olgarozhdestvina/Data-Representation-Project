@@ -46,13 +46,26 @@ Packages and modules used to complete the project:
 
 ####  How to run the code <a name="how_to_run_the_code"></a>
 
-1. Make sure that you have Python and above packages installed 
-2. Download or clone current repository "Data-Representation-Project"
-3. Open Command Interpreter and get into correct directory
-4. Run createDatabase.py and then createTable.py to initialize a database called "dentalclinic" with a table called "dentists" or use instructions from initdb.sql in MySQL command line client.
-5. Make a virtual environment by running python -m venv venv and then .\venv\Scripts\activate.bat to activate it.
-6. Set Flask app to flask_server and run it.
-7. Follow the flask URL to perform CRUD on the database or do it through another instance of Command Interpreter.
+
+1. Get into directory _"Data-Representation-Project"_ in your Command Interpreter
+2. Run __createDatabase.py__ and then __createTables.py__ to initialize a database _"dentalclinic"_ with two tables or follow instructions in _initdb.sql_ in MySQL command line client.
+3. Make a virtual environment by running __python -m venv venv__.
+4. Run __.\venv\Scripts\activate.bat__ to activate venv.
+5. Install packages by running __pip install -r requirements.txt__
+6. Set Flask app to flask_server and run it: 
+    
+    * For Windows:
+    ```bash
+    set FLASK_APP=flask_server
+    flask run
+    
+    ```
+    * For Linux: 
+    ```bash
+    export FLASK_APP=flask_server
+    flask run
+    ```
+7. Follow the flask URL to perform CRUD operations on the database or do it through another instance of Command Interpreter with CURL.
 
 
 ----
