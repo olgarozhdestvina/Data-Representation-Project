@@ -47,6 +47,8 @@ Packages and modules used to complete the project:
 ####  How to run the code <a name="how_to_run_the_code"></a>
 
 
+To run on your local machine follow the instructions below. 
+
 1. Get into directory _"Data-Representation-Project"_ in your Command Interpreter
 2. Run __createDatabase.py__ and then __createTables.py__ to initialize a database _"dentalclinic"_ with two tables or follow instructions in _initdb.sql_ in MySQL command line client.
 3. Run __python -m venv venv__ to make a virtual environment.
@@ -54,11 +56,11 @@ Packages and modules used to complete the project:
 
     * Windows:
     ```bash
-    source venv/bin/activate
+    .\venv\Scripts\activate.bat
     ```
     * Linux:
     ```bash
-    .\venv\Scripts\activate.bat
+    source venv/bin/activate
     ```
 5. Install packages by running __pip install -r requirements.txt__
 6. Set Flask app to flask_server and run it: 

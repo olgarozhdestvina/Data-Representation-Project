@@ -8,7 +8,7 @@ log = Blueprint("log", __name__, static_folder="static",
                 template_folder="templates")
 
 # Store session.
-log.permanent_session_lifetime = timedelta(minutes=5)
+log.permanent_session_lifetime = timedelta(minutes=30)
 
 # Login.
 @log.route('/', methods=['GET', 'POST'])

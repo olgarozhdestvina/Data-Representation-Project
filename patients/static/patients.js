@@ -155,10 +155,12 @@ function clearForm() {
 }
 
 // AJAX CALLS.
+// For calls to work on PythonAnywhere.
+host = window.location.origin
 // Get all patients.
 function getAllAjax() {
     $.ajax({
-        "url": "http://127.0.0.1:5000/patients",
+        "url": host+"/patients",
         "method": "GET",
         "data": "",
         "dataType": "JSON",
@@ -190,7 +192,7 @@ function getAllAjax() {
 function createPatientAjax(patient) {
     console.log(JSON.stringify(patient));
     $.ajax({
-        "url": "http://127.0.0.1:5000/patients",
+        "url": host+"/patients",
         "method": "POST",
         "data": JSON.stringify(patient),
         "dataType": "JSON",
@@ -225,7 +227,7 @@ function createPatientAjax(patient) {
 function updatePatientAjax(patient) {
     console.log(JSON.stringify(patient));
     $.ajax({
-        "url": "http://127.0.0.1:5000/patients/" + encodeURI(patient.patientId),
+        "url": host+"/patients/"+encodeURI(patient.patientId),
         "method": "PUT",
         "data": JSON.stringify(patient),
         "dataType": "JSON",
@@ -256,7 +258,7 @@ function updatePatientAjax(patient) {
 function deletePatientAjax(patientId) {
     //console.log(JSON.stringify('deleting '+patientId));
     $.ajax({
-        "url": "http://127.0.0.1:5000/patients/" + encodeURI(patientId),
+        "url": host+"/patients/"+encodeURI(patientId),
         "method": "DELETE",
         "data": "",
         "dataType": "JSON",
@@ -286,7 +288,7 @@ function deletePatientAjax(patientId) {
 // Get existing dentist IDs from the dentist table.
 function getDentistIds() {
     $.ajax({
-        "url": "http://127.0.0.1:5000/dentists",
+        "url": host+"/dentists",
         "method": "GET",
         "data": "",
         "dataType": "JSON",

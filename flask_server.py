@@ -53,7 +53,5 @@ def handle_bad_request(e):
 def handle_bad_request(e):
     return 'Internal server error!', 500
 
-
-# The debug mode is off as it doesn't allow POST (405 error).
 if __name__ == '__main__':
     app.run()
