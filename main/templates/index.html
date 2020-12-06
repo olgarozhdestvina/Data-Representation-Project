@@ -1,17 +1,18 @@
 <!-- Main page -->
 
 {% extends "base.html" %}
+{% block script %} <script src="{{ url_for('static', filename='unsplash_API_photos.js')}}" type="text/javascript"></script> {% endblock %}
 {% block title %}DENTAL CLINIC{% endblock %}
 {% block content %}
 <!-- Form -->
 <div class="wrapper">
     <div class="left_box">
         <a href='login/dentist_database' class="nav-link intro_txt">DENTIST DATABASE</a>
-        <img src="https://cdn.onlinewebfonts.com/svg/img_490649.png" class="box_image" alt="dentist image">
+        <img src="" class="box_image" alt="">
     </div>
     <div class="right_box">
         <a href='login/patient_database' class="nav-link intro_txt">PATIENT DATABASE</a>
-        <img src="https://i.pinimg.com/originals/0a/5f/17/0a5f17fdfbedf2e13bb1c70c2878046c.png" class="box_image" alt="dentist image">      
+        <img src="" class="box_image" alt="">      
     </div>
 </div>
 {% endblock %}

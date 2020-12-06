@@ -49,23 +49,32 @@ Packages and modules used to complete the project:
 
 1. Get into directory _"Data-Representation-Project"_ in your Command Interpreter
 2. Run __createDatabase.py__ and then __createTables.py__ to initialize a database _"dentalclinic"_ with two tables or follow instructions in _initdb.sql_ in MySQL command line client.
-3. Make a virtual environment by running __python -m venv venv__.
-4. Run __.\venv\Scripts\activate.bat__ to activate venv.
+3. Run __python -m venv venv__ to make a virtual environment.
+4. Activate venv by running:
+
+    * Windows:
+    ```bash
+    source venv/bin/activate
+    ```
+    * Linux:
+    ```bash
+    .\venv\Scripts\activate.bat
+    ```
 5. Install packages by running __pip install -r requirements.txt__
 6. Set Flask app to flask_server and run it: 
     
-    * For Windows:
+    * Windows:
     ```bash
     set FLASK_APP=flask_server
     flask run
-    
     ```
-    * For Linux: 
+    * Linux: 
     ```bash
     export FLASK_APP=flask_server
     flask run
     ```
 7. Follow the flask URL to perform CRUD operations on the database or do it through another instance of Command Interpreter with CURL.
+8. Run __deactivate__ to exit venv.
 
 
 ----
@@ -85,3 +94,5 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 - [Tech With Tim: Flask Tutorials](https://www.youtube.com/playlist?list=PLzMcBGfZo4-n4vJJybUVV3Un_NFS5EOgX)
 - [teclado](https://blog.tecladocode.com)
 - [Caspio](https://forums.caspio.com/)
+- [w3schools.com](http://w3schools.com/)
+- [Unsplash](https://unsplash.com/)

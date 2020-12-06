@@ -1,8 +1,7 @@
 <!-- Dentist Database -->
 
 {% extends "base.html" %}
-{% block script %}
-<script src="{{ url_for('dentists.static', filename='dentists.js')}}" type="text/javascript"></script>{% endblock %}
+{% block script %}<script src="{{ url_for('dentists.static', filename='dentists.js')}}" type="text/javascript"></script>{% endblock %}
 {% block title %}Dentists{% endblock %}
 {% block content %}
 <!-- Table-->
@@ -20,47 +19,44 @@
             </tr>
         </thead>
     </table>
+    <!-- Show create button -->
+    <button id="showCreateButton" onclick="showCreate()">Add Dentist</button>
 </div>
 
 <!-- Update Form -->
 <form>
     <div class="form-group" id='createUpdateForm' style="display: none">
-        <div id="grid">
-            <span id="createLabel">Add</span> <span id="updateLabel">Update</span> Dentist
+            <div id="grid">
+                <span id="createLabel">Add</span> <span id="updateLabel">Update</span> Dentist
+            </div>
+
+            <!-- ID -->
+            <div class="col-sm-5">
+                <input type="hidden" name="dentistId" />
+
+                <!-- Dentist Name -->
+                <label for="dentistName">Dentist Name</label>
+                <input type="text" name="dentistName" class="form-control" placeholder="e.g. John Smith"><br />
+
+                <!-- Position -->
+                <label for="position">Position</label>
+                <select class="form-control" name="position">
+                    <option value="General Dentist" selected>General Dentist</option>
+                    <option value="Implantologist">Implantologist</option>
+                    <option value="Endodontist">Endodontist</option>
+                    <option value="Orthodontist">Orthodontist</option>
+                    <option value="Maxillofacial surgeon">Maxillofacial Surgeon</option>
+                </select><br />
+
+                <!-- Register Number -->
+                <label for="regNumber">Register Number</label>
+                <input type="text" name="regNumber" class="form-control" placeholder="e.g. 34/M9"><br />
+
+                <!-- Buttons -->
+                <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
+                <span><button type="submit" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
+                <span><button id="goBackButton" class="delete-back" onclick="return goBack()">Back</button></span>
+            </div>
         </div>
-
-        <!-- ID -->
-        <div class="col-sm-5">
-            <input type="hidden" name="dentistId" />
-
-            <!-- Dentist Name -->
-            <label for="dentistName">Dentist Name</label>
-            <input type="text" name="dentistName" class="form-control" placeholder="e.g. John Smith"><br />
-
-            <!-- Position -->
-            <label for="position">Position</label>
-            <select class="form-control" name="position">
-                <option value="General Dentist" selected>General Dentist</option>
-                <option value="Implantologist">Implantologist</option>
-                <option value="Endodontist">Endodontist</option>
-                <option value="Orthodontist">Orthodontist</option>
-                <option value="Maxillofacial surgeon">Maxillofacial Surgeon</option>
-            </select><br />
-
-            <!-- Register Number -->
-            <label for="regNumber">Register Number</label>
-            <input type="text" name="regNumber" class="form-control" placeholder="e.g. 34/M9"><br />
-
-            <!-- Buttons -->
-            <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
-            <span><button type="submit" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
-            <span><button id="goBackButton" class="delete-back" onclick="return goBack()">Back</button></span>
-        </div>
-    </div>
 </form>
-
-<!-- Create button -->
-<div>
-    <button id="showCreateButton" onclick="showCreate()">Add Dentist</button>
-</div>
 {% endblock %}

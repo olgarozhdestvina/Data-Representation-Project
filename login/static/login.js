@@ -31,3 +31,13 @@ $(function() {
         }
     });
 });
+
+// Load background image for the form.
+function unsplash_API_images() {
+    $.getJSON('../../static/unsplash_images.json', function(data) {
+        // add a background image to the body
+        $('body').attr('style', 'background-image: url(' + data[9].urls.full + '); background-repeat: no-repeat; background-position: right;  background-size: cover;');
+    });
+}
+
+unsplash_API_images() 

@@ -20,6 +20,8 @@ function showCreate() {
     document.getElementById('doCreateButton').style.display = "inline"
     document.getElementById('goBackButton').style.display = "inline"
     document.getElementById('doUpdateButton').style.display = "none"
+    // Load background API image.
+    unsplash_API_images();
 }
 
 // Visability of elements when updating a patient.
@@ -35,7 +37,8 @@ function showUpdate(buttonElement) {
     document.getElementById('doCreateButton').style.display = "none"
     document.getElementById('doUpdateButton').style.display = "inline"
     document.getElementById('goBackButton').style.display = "inline"
-
+    // Load background API image.
+    unsplash_API_images();
     // Populating form with patient information.
     var rowElement = buttonElement.parentNode.parentNode
     var patient = getPatientFromRow(rowElement)
@@ -309,6 +312,14 @@ function getDentistIds() {
                 addDentistIdToSelect(dentist);
             }
         }
+    });
+}
+
+// Load background image for the form.
+function unsplash_API_images() {
+    $.getJSON('../../static/unsplash_images.json', function(data) {
+        // add a background image to the body
+        $('body').attr('style', 'background-image: url(' + data[3].urls.full + '); background-repeat: no-repeat; background-position: right;  background-size: cover;');
     });
 }
 
