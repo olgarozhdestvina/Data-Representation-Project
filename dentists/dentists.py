@@ -14,7 +14,7 @@ def get_all_dentists():
     return jsonify(dentalClinicDAO.get_all_dentists())
 
 # Find by dentistId.
-# curl http://127.0.0.1:5000/dentists/5
+# curl http://127.0.0.1:5000/dentists/1
 @dentist_table.route('/<int:dentistId>')
 def find_by_dentistId(dentistId):
     return jsonify(dentalClinicDAO.find_by_dentistId(dentistId))

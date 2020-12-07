@@ -18,6 +18,7 @@ def create_database():
         sql = "CREATE DATABASE dentalclinic"
         cursor.execute(sql)
         print("Database created.")
+        cursor.close()
     except Error as err:
         print("Database creation failed:", err)
         exit(1)

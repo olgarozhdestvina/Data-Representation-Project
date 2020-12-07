@@ -19,6 +19,7 @@ def create_dentist_table():
         sql = "CREATE TABLE dentist (dentistId int AUTO_INCREMENT PRIMARY KEY, dentistName varchar(255) NOT NULL CHECK (dentistName <> ''), position varchar(255), regNumber varchar(255) CHECK (regNumber <> ''), UNIQUE KEY unique_regNumber (regNumber))"
         cursor.execute(sql)
         print("Table DENTIST created.")
+        cursor.close()
     except Error as err:
         print("Creation of dentist_table failed:", err)
         exit(1)
@@ -30,6 +31,7 @@ def create_patient_table():
         sql = "CREATE TABLE patient (patientId int AUTO_INCREMENT PRIMARY KEY, patientName varchar(255) NOT NULL CHECK (patientName <> ''), phone int, dentistId int NOT NULL, FOREIGN KEY (dentistId) REFERENCES dentist(dentistId))"
         cursor.execute(sql)
         print("Table PATIENT created.")
+        cursor.close()
     except Error as err:
         print("Creation of patient_table failed:", err)
         exit(1)

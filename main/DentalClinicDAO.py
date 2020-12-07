@@ -40,6 +40,7 @@ class DentalClinicDAO:
             cursor.execute(sql, values)
             db.commit()
             lastrowid = cursor.lastrowid
+            cursor.close()
             db.close()
             return lastrowid
         except Error as err:
@@ -57,10 +58,12 @@ class DentalClinicDAO:
             returnArray = []
             for result in results:
                 returnArray.append(self.convert_to_dict_dentist(result))
+            cursor.close()
             db.close()
             return returnArray
         except Error as err:
             print("Error: ", err)
+
 
     # Get dentist by ID.
     def find_by_dentistId(self, dentistId):
@@ -72,6 +75,7 @@ class DentalClinicDAO:
             cursor.execute(sql, values)
             result = cursor.fetchone()
             dentist = self.convert_to_dict_dentist(result)
+            cursor.close()
             db.close()
             return dentist
         except Error as err:
@@ -85,6 +89,7 @@ class DentalClinicDAO:
             sql = "UPDATE dentist SET dentistName = %s, position = %s, regNumber = %s WHERE dentistId = %s"
             cursor.execute(sql, values)
             db.commit()
+            cursor.close()
             db.close()
         except Error as err:
             print("Creation of a new dentist failed: ", err)
@@ -98,6 +103,7 @@ class DentalClinicDAO:
             values = (dentistId,)
             cursor.execute(sql, values)
             db.commit()
+            cursor.close()
             db.close()
         except Error as err:
             print(f"Failed to delete the dentist with id {dentistId}", err)
@@ -123,6 +129,7 @@ class DentalClinicDAO:
             cursor.execute(sql, values)
             db.commit()
             lastrowid = cursor.lastrowid
+            cursor.close()
             db.close()
             return lastrowid
         except Error as err:
@@ -139,6 +146,7 @@ class DentalClinicDAO:
             returnArray = []
             for result in results:
                 returnArray.append(self.convert_to_dict_patient(result))
+            cursor.close()
             db.close()
             return returnArray
         except Error as err:
@@ -154,6 +162,7 @@ class DentalClinicDAO:
             cursor.execute(sql, values)
             result = cursor.fetchone()
             patient = self.convert_to_dict_patient(result)
+            cursor.close()
             db.close()
             return patient
         except Error as err:
@@ -167,6 +176,7 @@ class DentalClinicDAO:
             sql = "UPDATE patient SET patientName = %s, phone = %s, dentistId= %s WHERE patientId = %s"
             cursor.execute(sql, values)
             db.commit()
+            cursor.close()
             db.close()
         except Error as err:
             print("Creation of a new patient failed: ", err)
@@ -180,9 +190,11 @@ class DentalClinicDAO:
             values = (patientId,)
             cursor.execute(sql, values)
             db.commit()
+            cursor.close()
             db.close()
         except Error as err:
             print(f"Failed to delete the patient with id {patientId}", err)
+
 
     # Convert tuples with patient info to dictionary objects.
     def convert_to_dict_patient(self, result):
