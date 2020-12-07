@@ -3,7 +3,9 @@
 <img height="220" src="https://drdds.com/wp-content/uploads/2019/09/Illustration_DentalClinic.png">
 
 <br>
-The repository contains a CRUD (Create, Read, Update, Delete) dentist/ patient management web application __Dental Clinic__. It is built using _Flask_, a microframework for Python, and _MySQL_, a database management system. 
+
+The repository contains a CRUD (Create, Read, Update, Delete) dentist/ patient management web application **Dental Clinic.** It is built using *Flask*, a microframework for Python, and *MySQL*, a database management system. 
+<br>
 
 The project has the following features:
  * A Flask server with a REST API
@@ -12,17 +14,13 @@ The project has the following features:
  * Web interface using AJAX calls
  * Online hosted on PythonAnywhere
 
-<br><br>
+<br>
 
 *Submitted by:* Olga Rozhdestvina (Student No: G00387844) 
 
 *Lecturer:* Andrew Beatty
 
-*Programming Languages used:* 
- * [Python](https://www.python.org/)
- * [HTML](https://html.com/)
- * [JavaScript](https://www.javascript.com/)
- * [MySQL](https://www.mysql.com/)
+*Programming Languages used:* [Python](https://www.python.org/), [HTML](https://html.com/), [JavaScript](https://www.javascript.com/), [MySQL](https://www.mysql.com/)
 
 
 ----
