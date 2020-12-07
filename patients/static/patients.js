@@ -114,7 +114,6 @@ function getPatientFromRow(rowElement) {
     patient.patientId = rowElement.getAttribute('patientId')
     patient.patientName = rowElement.cells[1].firstChild.textContent
     patient.phone = parseInt(rowElement.cells[2].firstChild.textContent, 10)
-    patient.dentistId = rowElement.cells[3].firstChild.textContent
     return patient
 }
 

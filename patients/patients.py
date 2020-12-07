@@ -6,7 +6,7 @@ from main.DentalClinicDAO import dentalClinicDAO
 # Create a blueprint.
 patient_table = Blueprint("patient_table", __name__,
                           static_folder="static", template_folder="templates")
-# Get all patient
+# Get all patients
 # curl http://127.0.0.1:5000/patients/
 @patient_table.route('/')
 def get_all_patients():
@@ -18,7 +18,7 @@ def get_all_patients():
 def find_by_patientId(patientId):
     return jsonify(dentalClinicDAO.find_by_patientId(patientId))
 
-# Create patient.
+# Create a patient.
 # Make sure there is at least one dentist in the dentist table to be able to create a patient as tables are connected on foreign key.
 # curl -X POST -H "content-type:application/json" -d "{\"patientName\": \"Sinead Howe\", \"phone\": \"0895467690\", \"dentistId\":1}" http://127.0.0.1:5000/patients/
 @patient_table.route('/', methods=['GET', 'POST'])
@@ -36,7 +36,7 @@ def create_patient():
     return jsonify(patient)
 
 
-# Update patient.
+# Update a patient.
 # curl -X PUT -H "content-type:application/json" -d "{\"patientName\": \"Sinead Spillane\", \"phone\": \"0875467696\", \"dentistId\":1}" http://127.0.0.1:5000/patients/1
 @patient_table.route('/<int:patientId>', methods=['PUT'])
 def update_patient(patientId):
@@ -58,7 +58,7 @@ def update_patient(patientId):
     return jsonify(foundPatient)
 
 
-# Delete patient.
+# Delete a patient.
 # curl -X DELETE http://127.0.0.1:5000/patients/1
 @patient_table.route('/<int:patientId>', methods=['DELETE'])
 def delete_patient(patientId):

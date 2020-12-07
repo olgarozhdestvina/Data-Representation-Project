@@ -20,6 +20,6 @@ CREATE TABLE patient (
     patientId int AUTO_INCREMENT PRIMARY KEY,
     patientName varchar(255) NOT NULL CHECK (patientName <> ''),
     phone int,
-    dentistId int NOT NULL,
-    FOREIGN KEY (dentistId) REFERENCES dentist(dentistId)
+    dentistId int,
+    FOREIGN KEY (dentistId) REFERENCES dentist(dentistId) ON DELETE SET NULL
     );

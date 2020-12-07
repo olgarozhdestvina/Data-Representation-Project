@@ -19,7 +19,7 @@ def get_all_dentists():
 def find_by_dentistId(dentistId):
     return jsonify(dentalClinicDAO.find_by_dentistId(dentistId))
 
-# Create dentist.
+# Create a dentist.
 # curl -X POST -H "content-type:application/json" -d "{\"dentistName\": \"Siobhan Fahey\", \"position\": \"Endodontist\", \"regNumber\":\"123/2T\"}" http://127.0.0.1:5000/dentists/
 @dentist_table.route('/', methods=['GET', 'POST'])
 def create_dentist():
@@ -36,7 +36,7 @@ def create_dentist():
     dentist['dentistId'] = newId
     return jsonify(dentist)
 
-# Update dentist.
+# Update a dentist.
 # curl -X PUT -H "content-type:application/json" -d "{\"dentistName\": \"Siobhan Fahey\", \"position\": \"Implantologist\", \"regNumber\":\"123/2T\"}" http://127.0.0.1:5000/dentists/1
 @dentist_table.route('/<int:dentistId>', methods=['PUT'])
 def update_dentist(dentistId):
@@ -58,7 +58,7 @@ def update_dentist(dentistId):
     return jsonify(foundDentist)
 
 
-# Delete dentist.
+# Delete a dentist.
 # curl -X DELETE http://127.0.0.1:5000/dentists/1
 @dentist_table.route('/<int:dentistId>', methods=['DELETE'])
 def delete_dentist(dentistId):

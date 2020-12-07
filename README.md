@@ -3,14 +3,26 @@
 <img height="220" src="https://drdds.com/wp-content/uploads/2019/09/Illustration_DentalClinic.png">
 
 <br>
-The repository contains a web application project Dental clinic. 
+The repository contains a CRUD (Create, Read, Update, Delete) dentist/ patient management web application __Dental Clinic__. It is built using _Flask_, a microframework for Python, and _MySQL_, a database management system. 
+
+The project has the following features:
+ * A Flask server with a REST API
+ * Interaction with a third party API using jQuery
+ * MySQL database with two table accessible with authorization
+ * Web interface using AJAX calls
+ * Online hosted on PythonAnywhere
+
 <br><br>
 
 *Submitted by:* Olga Rozhdestvina (Student No: G00387844) 
 
 *Lecturer:* Andrew Beatty
 
-*Programming Languages used:* [Python](https://www.python.org/), [HTML](https://html.com/), [JavaScript](https://www.javascript.com/), [MySQL](https://www.mysql.com/)
+*Programming Languages used:* 
+ * [Python](https://www.python.org/)
+ * [HTML](https://html.com/)
+ * [JavaScript](https://www.javascript.com/)
+ * [MySQL](https://www.mysql.com/)
 
 
 ----
@@ -29,15 +41,16 @@ The repository contains a web application project Dental clinic.
 #### Set up <a name="set_up"></a>
 
 Applications used for completion of the tasks are 
-  * [Visual Studio Code](https://code.visualstudio.com/),
+  * [Visual Studio Code](https://code.visualstudio.com/)
   * [cmder](http://cmder.net/)
 
 Distribution of Python is [Anaconda Python distribution](https://www.anaconda.com/). 
 
 Packages and modules used to complete the project: 
-[mysql.connector](https://pypi.org/project/mysql-connector-python/),
-[venv](https://docs.python.org/3/library/venv.html),
-[flask](https://flask.palletsprojects.com/en/1.1.x/)
+  * [mysql.connector](https://pypi.org/project/mysql-connector-python/)
+  * [venv](https://docs.python.org/3/library/venv.html)
+  * [flask](https://flask.palletsprojects.com/en/1.1.x/)
+  * [datetime](https://docs.python.org/3/library/datetime.html)
 
 
 
@@ -46,11 +59,16 @@ Packages and modules used to complete the project:
 
 ####  How to run the code <a name="how_to_run_the_code"></a>
 
+  * _On remote._
 
+To view the project on remove please follow the link http://olgarozhdestvina.pythonanywhere.com/ on PythonAnywhere.
+
+  * _Locally._
+  
 To run on your local machine follow the instructions below. 
 
 1. Get into directory _"Data-Representation-Project"_ in your Command Interpreter
-2. Run __createDatabase.py__ and then __createTables.py__ to initialize a database _"dentalclinic"_ with two tables or follow instructions in _initdb.sql_ in MySQL command line client.
+2. Run __createDatabase.py__ and then __createTables.py__ to initialize a database _"dentalclinic"_ or follow instructions in _initdb.sql_ in MySQL command line client.
 3. Run __python -m venv venv__ to make a virtual environment.
 4. Activate venv by running:
 
@@ -98,3 +116,4 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 - [Caspio](https://forums.caspio.com/)
 - [w3schools.com](http://w3schools.com/)
 - [Unsplash](https://unsplash.com/)
+- [PythonAnywhere](https://www.pythonanywhere.com/)
