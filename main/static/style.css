@@ -77,6 +77,25 @@ header {
 }
 
 /* Table */
+.my-custom-scrollbar {
+    height: calc( 100vh - 350px );
+    overflow-y: auto;
+    }
+
+    .table-wrapper-scroll-y {
+    display: block;
+    }
+.thead-dark th {
+    position: sticky; 
+    top: 0;
+}
+/* Button under the table */
+#showCreateButton {
+    position: relative;
+    margin-top: 25px;
+}
+
+/* Form */
 #grid {
     font-weight: bold;
     padding: 12px;

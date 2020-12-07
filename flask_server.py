@@ -24,8 +24,8 @@ app = Flask(__name__, static_folder="main/static",
 app.secret_key = 'someKey'
 
 # Regestering blueprints.
-app.register_blueprint(dentist_table, url_prefix="/dentists")
-app.register_blueprint(patient_table, url_prefix="/patients")
+app.register_blueprint(dentist_table, url_prefix="/dentists/")
+app.register_blueprint(patient_table, url_prefix="/patients/")
 app.register_blueprint(log, url_prefix="/login")
 
 # Main page.
@@ -54,4 +54,4 @@ def handle_bad_request(e):
     return 'Internal server error!', 500
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

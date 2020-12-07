@@ -5,13 +5,17 @@ function showViewAll() {
     document.getElementById('showCreateButton').style.display = "block"
     document.getElementById('dentistTable').style.display = "block"
     document.getElementById('createUpdateForm').style.display = "none"
+    document.getElementById('divForTable').style.display = "block"
 }
 
 // Visability of elements when creating a new dentist.
 function showCreate() {
+    // Load background API image.
+    unsplash_API_images();
     // Table and form.
     document.getElementById('dentistTable').style.display = "none"
     document.getElementById('createUpdateForm').style.display = "block"
+    document.getElementById('divForTable').style.display = "none"
     // Labels.
     document.getElementById('createLabel').style.display = "inline"
     document.getElementById('updateLabel').style.display = "none"
@@ -20,15 +24,16 @@ function showCreate() {
     document.getElementById('doCreateButton').style.display = "inline"
     document.getElementById('goBackButton').style.display = "inline"
     document.getElementById('doUpdateButton').style.display = "none"
-    // Load background API image.
-    unsplash_API_images();
 }
 
 // Visability of elements when updating a dentist.
 function showUpdate(buttonElement) {
+    // Load background API image.
+    unsplash_API_images();
     // Table and form.
     document.getElementById('dentistTable').style.display = "none"
     document.getElementById('createUpdateForm').style.display = "block"
+    document.getElementById('divForTable').style.display = "none"
     // Labels.
     document.getElementById('createLabel').style.display = "none"
     document.getElementById('updateLabel').style.display = "inline"
@@ -37,8 +42,6 @@ function showUpdate(buttonElement) {
     document.getElementById('doCreateButton').style.display = "none"
     document.getElementById('doUpdateButton').style.display = "inline"
     document.getElementById('goBackButton').style.display = "inline"
-    // Load background API image.
-    unsplash_API_images();
     // Populating form with dentist information.
     var rowElement = buttonElement.parentNode.parentNode
     var dentist = getDentistFromRow(rowElement)
@@ -61,6 +64,7 @@ function doCreate() {
     dentist.regNumber = form.querySelector('input[name="regNumber"]').value
     console.log(JSON.stringify(dentist))
     createDentistAjax(dentist)
+    
 }
 
 // Update.
@@ -151,7 +155,7 @@ host = window.location.origin
 // Get all dentists.
 function getAllAjax() {
     $.ajax({
-        "url": host+"/dentists",
+        "url": host+"/dentists/",
         "method": "GET",
         "data": "",
         "dataType": "JSON",
@@ -183,7 +187,7 @@ function getAllAjax() {
 function createDentistAjax(dentist) {
     console.log(JSON.stringify(dentist));
     $.ajax({
-        "url": host+"/dentists",
+        "url": host+"/dentists/",
         "method": "POST",
         "data": JSON.stringify(dentist),
         "dataType": "JSON",

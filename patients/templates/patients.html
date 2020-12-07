@@ -7,8 +7,8 @@
 {% block title %}Patients{% endblock %}
 {% block content %}
 <!-- Table-->
-<div>
-    <table class="table" id="patientTable">
+<div class="table-wrapper-scroll-y my-custom-scrollbar" id="divForTable"> 
+    <table class="table table-striped" id="patientTable">
         <caption>List of patients</caption>
         <thead class="thead-dark">
             <tr>
@@ -22,6 +22,10 @@
         </thead>
     </table>
 </div>
+    <div>
+        <!-- Show create button -->
+        <button id="showCreateButton" onclick="showCreate()">Add Patient</button>
+    </div>    
 
 <!-- Update Form -->
 <form>
@@ -44,8 +48,7 @@
 
             <!-- Dentist ID -->
             <label for="dentistId">Dentist ID</label>
-            <select id="dentistIds" name="dentistId" class="form-control"
-                onclick="getDentistIds(); this.onclick=null;"></select><br>
+            <select id="dentistIds" name="dentistId" class="form-control" onclick="getDentistIds(); this.onclick=null;"></select><br>
 
             <!-- Buttons -->
             <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
@@ -54,9 +57,4 @@
         </div>
     </div>
 </form>
-
-<!-- Create button -->
-<div>
-    <button id="showCreateButton" onclick="showCreate()">Add patient</button>
-</div>
 {% endblock %}

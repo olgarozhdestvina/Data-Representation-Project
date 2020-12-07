@@ -28,7 +28,7 @@ def create_dentist_table():
 def create_patient_table():
     try:
         cursor = db.cursor()
-        sql = "CREATE TABLE patient (patientId int AUTO_INCREMENT PRIMARY KEY, patientName varchar(255) NOT NULL CHECK (patientName <> ''), phone int, dentistId int NOT NULL, FOREIGN KEY (dentistId) REFERENCES dentist(dentistId))"
+        sql = "CREATE TABLE patient (patientId int AUTO_INCREMENT PRIMARY KEY, patientName varchar(255) NOT NULL CHECK (patientName <> ''), phone int, dentistId int NOT NULL, FOREIGN KEY (dentistId) REFERENCES dentist(dentistId)) ON DELETE SET NULL"
         cursor.execute(sql)
         print("Table PATIENT created.")
         cursor.close()

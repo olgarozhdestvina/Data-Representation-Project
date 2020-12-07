@@ -5,8 +5,8 @@
 {% block title %}Dentists{% endblock %}
 {% block content %}
 <!-- Table-->
-<div>
-    <table class="table" id="dentistTable">
+<div class="table-wrapper-scroll-y my-custom-scrollbar" id="divForTable"> 
+    <table class="table table-striped" id="dentistTable">
         <caption>List of currently employed dentists</caption>
         <thead class="thead-dark">
             <tr>
@@ -19,9 +19,11 @@
             </tr>
         </thead>
     </table>
-    <!-- Show create button -->
-    <button id="showCreateButton" onclick="showCreate()">Add Dentist</button>
 </div>
+    <div>
+        <!-- Show create button -->
+        <button id="showCreateButton" onclick="showCreate()">Add Dentist</button>
+    </div>    
 
 <!-- Update Form -->
 <form>
@@ -53,7 +55,7 @@
                 <input type="text" name="regNumber" class="form-control" placeholder="e.g. 34/M9"><br />
 
                 <!-- Buttons -->
-                <span><button type="submit" id="doCreateButton" onclick="doCreate()">Create</button></span>
+                <span><button type="submit" id="doCreateButton" onclick="doCreate();">Create</button></span>
                 <span><button type="submit" id="doUpdateButton" onclick="doUpdate()">Update</button></span>
                 <span><button id="goBackButton" class="delete-back" onclick="return goBack()">Back</button></span>
             </div>

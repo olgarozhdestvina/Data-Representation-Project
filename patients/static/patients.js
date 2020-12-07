@@ -5,13 +5,17 @@ function showViewAll() {
     document.getElementById('showCreateButton').style.display = "block"
     document.getElementById('patientTable').style.display = "block"
     document.getElementById('createUpdateForm').style.display = "none"
+    document.getElementById('divForTable').style.display = "block"
 }
 
 // Visability of elements when creating a new patient.
 function showCreate() {
+    // Load background API image.
+    unsplash_API_images();
     // Table and form.
     document.getElementById('patientTable').style.display = "none"
     document.getElementById('createUpdateForm').style.display = "block"
+    document.getElementById('divForTable').style.display = "none"
     // Labels.
     document.getElementById('createLabel').style.display = "inline"
     document.getElementById('updateLabel').style.display = "none"
@@ -20,15 +24,17 @@ function showCreate() {
     document.getElementById('doCreateButton').style.display = "inline"
     document.getElementById('goBackButton').style.display = "inline"
     document.getElementById('doUpdateButton').style.display = "none"
-    // Load background API image.
-    unsplash_API_images();
+    
 }
 
 // Visability of elements when updating a patient.
 function showUpdate(buttonElement) {
+    // Load background API image.
+    unsplash_API_images();
     // Table and form.
     document.getElementById('patientTable').style.display = "none"
     document.getElementById('createUpdateForm').style.display = "block"
+    document.getElementById('divForTable').style.display = "none"
     // Labels.
     document.getElementById('createLabel').style.display = "none"
     document.getElementById('updateLabel').style.display = "inline"
@@ -37,8 +43,6 @@ function showUpdate(buttonElement) {
     document.getElementById('doCreateButton').style.display = "none"
     document.getElementById('doUpdateButton').style.display = "inline"
     document.getElementById('goBackButton').style.display = "inline"
-    // Load background API image.
-    unsplash_API_images();
     // Populating form with patient information.
     var rowElement = buttonElement.parentNode.parentNode
     var patient = getPatientFromRow(rowElement)
@@ -160,7 +164,7 @@ host = window.location.origin
 // Get all patients.
 function getAllAjax() {
     $.ajax({
-        "url": host+"/patients",
+        "url": host+"/patients/",
         "method": "GET",
         "data": "",
         "dataType": "JSON",
@@ -192,7 +196,7 @@ function getAllAjax() {
 function createPatientAjax(patient) {
     console.log(JSON.stringify(patient));
     $.ajax({
-        "url": host+"/patients",
+        "url": host+"/patients/",
         "method": "POST",
         "data": JSON.stringify(patient),
         "dataType": "JSON",
@@ -288,7 +292,7 @@ function deletePatientAjax(patientId) {
 // Get existing dentist IDs from the dentist table.
 function getDentistIds() {
     $.ajax({
-        "url": host+"/dentists",
+        "url": host+"/dentists/",
         "method": "GET",
         "data": "",
         "dataType": "JSON",

@@ -8,6 +8,8 @@ log = Blueprint("log", __name__, static_folder="static",
                 template_folder="templates")
 
 # Store session.
+
+# session.permanent = True <--- only for active http
 log.permanent_session_lifetime = timedelta(minutes=30)
 
 # Login.
@@ -52,7 +54,7 @@ def get_dentist_database():
     # check if user is in session
     if 'user' in session:
         user = session['user']
-        return render_template("dentists.html", user=user)
+        return render_template("/dentists.html", user=user)
     else:
         flash('Please login to access this page', 'warning')
         return redirect(url_for('log.login'))
@@ -62,7 +64,7 @@ def get_dentist_database():
 def get_patient_database():
     if 'user' in session:
         user = session['user']
-        return render_template("patients.html", user=user)
+        return render_template("/patients.html", user=user)
     else:
         flash('Please login to access this page', 'warning')
         return redirect(url_for('log.login'))
