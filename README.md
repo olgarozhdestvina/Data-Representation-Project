@@ -1,4 +1,5 @@
-## Project assessment for Data Representation Module GMIT 2020
+## Dental Clinic
+### [Project assessment for Data Representation Module GMIT 2020]
 
 <img height="220" src="https://drdds.com/wp-content/uploads/2019/09/Illustration_DentalClinic.png">
 
